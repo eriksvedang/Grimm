@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{04E66DF6-70ED-4DC6-8636-9C32C2EE6D96}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Grimm</RootNamespace>
+    <AssemblyName>Grimm</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\GrimmException.cs" />
+    <Compile Include="src\Dialogue\DialogueRunner.cs" />
+    <Compile Include="src\Dialogue\Speech.cs" />
+    <Compile Include="src\Dialogue\ScriptLoader\Token.cs" />
+    <Compile Include="src\Dialogue\ScriptLoader\Tokenizer.cs" />
+    <Compile Include="src\Dialogue\Nodes\BranchingDialogueNode.cs" />
+    <Compile Include="src\Dialogue\Nodes\ConversationEndDialogueNode.cs" />
+    <Compile Include="src\Dialogue\Nodes\ConversationStartDialogueNode.cs" />
+    <Compile Include="src\Dialogue\Nodes\DialogueNode.cs" />
+    <Compile Include="src\Dialogue\Nodes\TimedDialogueNode.cs" />
+    <Compile Include="src\Dialogue\Nodes\UnifiedEndNodeForScope.cs" />
+    <Compile Include="src\Dialogue\ScriptLoader\DialogueScriptLoader.cs" />
+    <Compile Include="src\Dialogue\Nodes\GotoDialogueNode.cs" />
+    <Compile Include="src\Dialogue\Nodes\IfDialogueNode.cs" />
+    <Compile Include="src\Dialogue\Nodes\ImmediateNode.cs" />
+    <Compile Include="src\Dialogue\DialogueScriptPrinter.cs" />
+    <Compile Include="src\Dialogue\Nodes\StartCommandoDialogueNode.cs" />
+    <Compile Include="src\Dialogue\Nodes\WaitDialogueNode.cs" />
+    <Compile Include="src\Dialogue\Nodes\CallFunctionDialogueNode.cs" />
+    <Compile Include="src\Dialogue\Nodes\AssertDialogueNode.cs" />
+    <Compile Include="src\Dialogue\Nodes\ExpressionNode.cs" />
+    <Compile Include="src\Dialogue\Nodes\ListeningDialogueNode.cs" />
+    <Compile Include="src\Dialogue\Nodes\SilentDialogueNode.cs" />
+    <Compile Include="src\Dialogue\Nodes\BroadcastDialogueNode.cs" />
+    <Compile Include="src\Dialogue\Nodes\CancelDialogueNode.cs" />
+    <Compile Include="src\Dialogue\Nodes\FocusDialogueNode.cs" />
+    <Compile Include="src\Dialogue\Nodes\LoopDialogueNode.cs" />
+    <Compile Include="src\Dialogue\Nodes\BreakDialogueNode.cs" />
+    <Compile Include="src\Dialogue\IRegisteredDialogueNode.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\GameTypes\GameTypes\GameTypes.csproj">
+      <Project>{EC63C4E3-C5B8-4EB1-90CD-2D2FC17801BD}</Project>
+      <Name>GameTypes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Relay\Relay\Relay.csproj">
+      <Project>{9CFC0B9C-EC60-4488-9D4A-79F191AA5AFF}</Project>
+      <Name>Relay</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

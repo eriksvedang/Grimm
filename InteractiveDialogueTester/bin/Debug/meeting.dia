@@ -1,0 +1,49 @@
+IF CoinFlip() {
+	Monster "Yo!"
+} ELSE {
+	Monster "Ha ha!"
+}
+
+[again]
+
+LISTEN Annoyed {
+	Narrator "The monster is getting more annoyed..."
+}
+
+{
+	"Be gone foul beast!":
+		Monster "No"
+		{
+			"How dare you cross my path!":
+				Monster "I don't have any feelings so it's not that hard."
+			"I'll slay you with my golden sword":
+				Monster "Not if I eat you first!"
+			"You're fat":
+				BROADCAST Annoyed
+		}
+		Monster "Don't hurt my feelings"
+		
+	"Who are you?":
+		Monster "I'm the monster"
+		{
+			"But what is your name?":
+				Monster "I dunno..."
+			"OK, nice":
+				Monster "Whatever"
+			"Say what?":
+				BROADCAST Annoyed
+		}
+		Monster "I'm tired of talking!"
+}
+
+GOTO again
+
+Player "OK, byee"
+Monster "Take care, cya"
+
+{
+	"Yeah, in hell!":
+		Monster "..."
+		BROADCAST Annoyed
+}
+

@@ -1,0 +1,22 @@
+
+Monster "Yo!"
+
+{
+	"Be gone foul beast!":
+		Monster "No"
+		
+	"Who are you?":
+		Monster "I'm the monster"
+		{
+			"But what is your name?":
+				Monster "I dunno..."
+			"OK, nice":
+				Monster "Whatever"
+			"Hmmmm...":
+			"Say what?":
+		}
+		Monster "I'm tired of talking!"
+}
+
+Wizard "Byee"
+

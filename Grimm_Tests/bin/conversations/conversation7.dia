@@ -1,0 +1,10 @@
+IF TimeForSleep() {
+	Erik "Let's sleep"
+	Erik "I'm tired"
+}
+
+IF TimeForDinner()
+{
+	Erik "Let's eat"
+	Erik "I'm hungry"
+}

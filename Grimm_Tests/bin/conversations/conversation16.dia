@@ -1,0 +1,5 @@
+a "hej1"
+ASSERT Pass()
+a "hej2"
+ASSERT Fail()
+a "hej3"

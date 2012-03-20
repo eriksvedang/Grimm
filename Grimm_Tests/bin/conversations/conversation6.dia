@@ -1,0 +1,8 @@
+a "a"
+GOTO FIRST_JUMP_HERE
+e "fel!"
+a "c" [THEN_JUMP_HERE]
+GOTO __End__
+a "b" [FIRST_JUMP_HERE]
+GOTO THEN_JUMP_HERE
+e "fel!"

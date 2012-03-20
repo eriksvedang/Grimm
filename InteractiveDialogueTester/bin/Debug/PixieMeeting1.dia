@@ -1,0 +1,88 @@
+
+PlayerCharacter "Öööh..."
+Pixie "Va?"
+
+{
+	"Ehm, ursäkta det var inget":
+		Pixie "Nä vadå? Du ville ju säga nåt!"
+		{
+			"Du dansar bra":
+				Pixie "Haha tack! Vad snäll du är"
+			
+			"Jag måste gå och köpa en till öl":
+				Pixie "Nej, vänta!"
+		}
+		
+	"Hej":
+		Pixie "Hej"
+		Pixie ""
+		Pixie "Huh?"
+		PlayerCharacter "Jag ville bara säga hej tror jag..."
+}
+
+Pixie "Vem är du egentligen?"
+
+{
+	"Jag heter Sebastian":
+		Pixie "Pixie. Angenämnt!"
+		Pixie ""
+	
+	"Mitt namn är Sebastian, jag arbetar som kringresande läskförsäljare":
+		Pixie "Ok..."
+		Pixie "Jag heter Pixie och jag gillar att gå hit och dansa"
+		
+	"Öhhh":
+}
+
+Pixie "Jag tror inte jag sett dig förut"
+
+{
+	"Nej, jag kom just hit":
+		Pixie "Till Dorisburg?"
+		PlayerCharacter "Mm, precis"
+		Pixie "Så... vad tycker du om staden?"
+		{
+			"Den är jättefin":
+				Pixie "Tycker du? Jag är så jävla trött på den här hålan"
+			
+			"Jag vet inte än, jag kom igår":
+				PlayerCharacter "Men den verkar riktigt trevlig"
+				Pixie "Det är ett jävla skitställe kan jag avslöja"
+		}
+		Pixie "Men jag älskar att gå hit till BarYvonne"
+		Pixie "Kom så dansar vi!!!"
+		
+	"Jag går inte ut så mycket":
+		Pixie "Varför inte det?!!! Jag älskar att gå hit. De spelar så bra musik."
+		
+		{
+			"Ja den är jättebra":
+				Pixie "Ja visst är den?! Kom så dansar vi!"
+			
+			"Jag tycker de spelar för högt":
+				Pixie "Vad är du för tråkmåns egentligen?!"
+				PlayerCharacter "Eh..."
+				Pixie "Äh, förlåt! Jag är bara lite full. Vill du inte dansa med mig?"
+		}			
+}
+
+PlayerCharacter "Eh... ok, njae..."
+Pixie "Nej oj vänta! Klockan är ju massor"
+Pixie "Jag måste hem till Ivan"
+
+{
+	"Vem är det?":
+		Pixie ""
+	"Vem är Ivan?":
+		Pixie ""
+	"Ivan?":
+		Pixie ""
+	"Ivan, vem är det?":
+		Pixie ""
+	"Ivan??!?!?":
+		Pixie ""
+	"???":
+		Pixie ""
+}
+
+Pixie "Det är min pojkvän! Hej då jag måste dra!"

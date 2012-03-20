@@ -1,0 +1,11 @@
+
+LISTEN SomethingElse {
+	Audience "Wow"
+}
+
+LISTEN TensionWentUp {
+	Audience "Oh!"
+}
+
+Audience "Blah blah blah"
+

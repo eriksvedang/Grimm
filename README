@@ -1,0 +1,73 @@
+A Game Story Scripting Language written by Erik Svedäng.
+Requires the Relay database to work. Contains Textmate and Notepad++ bundles for syntax highlighting.
+
+ - LANGUAGE OVERVIEW -
+
+# 1. Make someone say something
+Charlie "What time is it?"
+
+# 2. Player is presented with dialogue options
+{
+	"It's 5.30":
+		Charlie "Ok, gotta run!"
+		
+	"I don't know":
+		Charlie "Oh, thanks anyway"
+}
+
+# 3. Jump to places marked with [ ] in the same file
+GOTO SKIP_HERE
+Charlie "I will not say this"
+[SKIP_HERE]
+Charlie "We meet again" [MEET_AGAIN]
+
+# 4. Control the flow by checking expressions in the dialogue runner
+IF Charlie.IsSleepy() {
+	Charlie "Yawn"
+}
+ELIF Charlie.IsHungry() {
+	Charlie "I want pizza..."
+}
+ELSE {
+	Charlie "Let's go party!"
+}
+
+# 5. Start other dialogue files
+START AnotherWorldCinematic
+
+# 6. Wait here until an expression becomes true (accepts strings, numbers and plain tokens)
+WAIT Charlie.IsInRoom(Corridor)
+
+# 7a. Register a block of code that will execute when an event happens
+LISTEN DisasterousEvent {
+	START EverybodyScreams
+}
+# An event listener can be given a name for later reference, like this:
+LISTEN DisasterousEvent DisasterEventListener {
+	START EverybodyScreams
+}
+
+# 7b. Wait here until an event is sent out
+LISTEN BetterTimes
+
+# 8. Send out an event
+BROADCAST TimeForWork
+
+# 9. Call a function in the dialogue runner (accepts strings, numbers and plain tokens)
+Monkey.Eat(Banana, "Munch munch", 5.0)
+
+# 10. Stop the execution of the script and unregister all listeners it contains
+STOP
+
+# 11. Unregister event listeners with a specific name in the same file
+CANCEL DisasterEventListener
+
+# 12. Check an expression and throw and exception if it's not true
+ASSERT EveryoneIsSane()
+
+# Notes on syntactical sugar:
+# Expressions and functions can be written in two ways
+Player.TeleportTo(StartPosition)
+# is the same thing as 
+TeleportTo(Player, StartPosition)
+# Both of these ways of writing will send the same two arguments to the 'TeleportTo' function

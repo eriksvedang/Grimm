@@ -1,0 +1,2 @@
+WAIT Monster.StateIs("Angry")
+You "Ahhhhh!"

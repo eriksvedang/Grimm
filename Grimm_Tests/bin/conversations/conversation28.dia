@@ -1,0 +1,6 @@
+WAIT A() AND B() AND C()
+
+WAIT A() AND B()
+{
+	
+}

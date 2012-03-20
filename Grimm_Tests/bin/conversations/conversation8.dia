@@ -1,0 +1,6 @@
+IF TimeForSleep() {
+	Erik "zzz"
+} ELSE {
+	Erik "come on!"
+	Erik "let's party"
+}

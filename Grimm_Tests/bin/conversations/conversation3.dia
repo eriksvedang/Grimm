@@ -1,0 +1,7 @@
+{
+	"Option 1":
+		WiseMan "first way" [first]
+
+	"Option 2":
+		WiseMan "second way" [second]
+}

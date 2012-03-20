@@ -1,0 +1,11 @@
+IF A() {
+	Erik "A"
+} 
+ELIF B() {
+	Erik "B"
+} ELIF C() {
+	Erik "C"
+} ELIF D()
+{
+	Erik "D"
+}

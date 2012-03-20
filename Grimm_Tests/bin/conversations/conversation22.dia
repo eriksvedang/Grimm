@@ -1,0 +1,12 @@
+
+LISTEN BetterTimes [betterTimesListener1] {
+	PositivePerson "Yay!"
+}
+
+LISTEN BetterTimes [betterTimesListener2] {
+	NegativePerson "Oh no!"
+}
+
+CANCEL betterTimesListener1
+BROADCAST BetterTimes
+

@@ -1,0 +1,9 @@
+LISTEN GoodNews {
+	Erik "Yay!"
+}
+
+LISTEN BadNews {
+	Erik "Oh no!"
+}
+
+BROADCAST GoodNews

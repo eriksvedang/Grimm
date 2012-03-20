@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grimm", "Grimm\Grimm.csproj", "{04E66DF6-70ED-4DC6-8636-9C32C2EE6D96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InteractiveDialogueTester", "InteractiveDialogueTester\InteractiveDialogueTester.csproj", "{D99ADFED-D2BC-47B8-8BB4-54A87CC93433}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameTypes", "..\GameTypes\GameTypes\GameTypes.csproj", "{EC63C4E3-C5B8-4EB1-90CD-2D2FC17801BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Relay", "..\Relay\Relay\Relay.csproj", "{9CFC0B9C-EC60-4488-9D4A-79F191AA5AFF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grimm_Tests", "Grimm_Tests\Grimm_Tests.csproj", "{8FCBDD6C-0716-48DF-936D-F109801AE78B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{04E66DF6-70ED-4DC6-8636-9C32C2EE6D96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04E66DF6-70ED-4DC6-8636-9C32C2EE6D96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04E66DF6-70ED-4DC6-8636-9C32C2EE6D96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04E66DF6-70ED-4DC6-8636-9C32C2EE6D96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FCBDD6C-0716-48DF-936D-F109801AE78B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FCBDD6C-0716-48DF-936D-F109801AE78B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FCBDD6C-0716-48DF-936D-F109801AE78B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FCBDD6C-0716-48DF-936D-F109801AE78B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CFC0B9C-EC60-4488-9D4A-79F191AA5AFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CFC0B9C-EC60-4488-9D4A-79F191AA5AFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CFC0B9C-EC60-4488-9D4A-79F191AA5AFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CFC0B9C-EC60-4488-9D4A-79F191AA5AFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D99ADFED-D2BC-47B8-8BB4-54A87CC93433}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D99ADFED-D2BC-47B8-8BB4-54A87CC93433}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D99ADFED-D2BC-47B8-8BB4-54A87CC93433}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D99ADFED-D2BC-47B8-8BB4-54A87CC93433}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC63C4E3-C5B8-4EB1-90CD-2D2FC17801BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC63C4E3-C5B8-4EB1-90CD-2D2FC17801BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC63C4E3-C5B8-4EB1-90CD-2D2FC17801BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC63C4E3-C5B8-4EB1-90CD-2D2FC17801BD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = InteractiveDialogueTester\InteractiveDialogueTester.csproj
+	EndGlobalSection
+EndGlobal

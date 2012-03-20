@@ -1,0 +1,27 @@
+{	scopeName = 'source.untitled';
+	fileTypes = ( 'dia' );
+	foldingStartMarker = '/\*\*|\{\s*$';
+	foldingStopMarker = '\*\*/|^\s*\}';
+	patterns = (
+		{	name = 'keyword.control.untitled';
+			match = '\b(IF|ELSE|GOTO|START|WAIT_UNTIL|ASSERT|STOP|LISTEN_FOR|BROADCAST)\b';
+		},
+		{	name = 'comment';
+			begin = '#';
+			end = '\n';
+		},
+		{	name = 'constant';
+			begin = '\[';
+			end = '\]';
+		},
+		{	name = 'string.quoted.double.untitled';
+			begin = '"';
+			end = '"';
+			patterns = (
+				{	name = 'constant.character.escape.untitled';
+					match = '\\.';
+				},
+			);
+		},
+	);
+}
