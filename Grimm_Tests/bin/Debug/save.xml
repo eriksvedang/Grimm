@@ -1,0 +1,15 @@
+Dialogues
+11
+["csharp-class","name","isOn","nextNode","conversation","language","scopeNode","eventName","hasBranch","branchNode","isListening","handle","timer","timerStartValue","speaker","line"]
+["System.String","System.String","System.Boolean","System.String","System.String","GameTypes.Language","System.String","System.String","System.Boolean","System.String","System.Boolean","System.String","System.Single","System.Single","System.String","System.String"]
+{"row":0,"values":["\"ConversationStartDialogueNode\"","\"__Start__\"","false","\"0(event listener)\"","\"conversation19\"","0","\"\"","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN"]}
+{"row":1,"values":["\"ConversationEndDialogueNode\"","\"__End__\"","false","\"\"","\"conversation19\"","0","\"\"","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN"]}
+{"row":2,"values":["\"ListeningDialogueNode\"","\"0(event listener)\"","false","\"4(event listener)\"","\"conversation19\"","0","\"\"","\"SomethingElse\"","true","\"2(eventBranchStartNode)\"","true","\"\"","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN"]}
+{"row":3,"values":["\"SilentDialogueNode\"","\"1(silent stop node)\"","false","\"\"","\"conversation19\"","0","\"\"","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN"]}
+{"row":4,"values":["\"ImmediateNode\"","\"2(eventBranchStartNode)\"","false","\"3\"","\"conversation19\"","0","\"\"","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN"]}
+{"row":5,"values":["\"TimedDialogueNode\"","\"3\"","false","\"1(silent stop node)\"","\"conversation19\"","0","\"\"","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","2.0","2.0","\"Audience\"","\"Wow\""]}
+{"row":6,"values":["\"ListeningDialogueNode\"","\"4(event listener)\"","false","\"8\"","\"conversation19\"","0","\"\"","\"TensionWentUp\"","true","\"6(eventBranchStartNode)\"","true","\"\"","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN"]}
+{"row":7,"values":["\"SilentDialogueNode\"","\"5(silent stop node)\"","false","\"\"","\"conversation19\"","0","\"\"","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN"]}
+{"row":8,"values":["\"ImmediateNode\"","\"6(eventBranchStartNode)\"","false","\"7\"","\"conversation19\"","0","\"\"","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN"]}
+{"row":9,"values":["\"TimedDialogueNode\"","\"7\"","false","\"5(silent stop node)\"","\"conversation19\"","0","\"\"","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","2.0","2.0","\"Audience\"","\"Oh!\""]}
+{"row":10,"values":["\"TimedDialogueNode\"","\"8\"","true","\"__End__\"","\"conversation19\"","0","\"\"","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","NULL_TOKEN","2.0","2.0","\"Audience\"","\"Blah blah blah\""]}
