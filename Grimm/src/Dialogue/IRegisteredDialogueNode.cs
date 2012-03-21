@@ -10,4 +10,3 @@ namespace GrimmLib
 		bool isListening { get; set; }
 	}
 }
-

@@ -1,6 +1,6 @@
 
-#define DEBUG_WRITE
-#define WRITE_NODE_LINKS
+//#define DEBUG_WRITE
+//#define WRITE_NODE_LINKS
 
 using System;
 using System.Collections.Generic;
@@ -13,11 +13,11 @@ namespace GrimmLib
 {
 	public class DialogueScriptLoader
 	{
-		DialogueRunner _dialogueRunner;
-		
-		const string _playerCharacterName = "Sebastian";
 		const string NAME_OF_START_NODE = "__Start__";
 		const string NAME_OF_END_NODE = "__End__";
+		
+		DialogueRunner _dialogueRunner;
+		string _playerCharacterName = "Sebastian";
 		string _conversationName;
 		Language _language;
 		List<Token> _tokens;
@@ -26,6 +26,7 @@ namespace GrimmLib
 		int _nextTokenIndex;
 		int k = 2; // how many lookahead symbols
 		int _nodeCounter;
+		Stack<DialogueNode> _loopStack;
 		
 		public DialogueScriptLoader(DialogueRunner pDialogueRunner)
 		{
@@ -59,6 +60,7 @@ namespace GrimmLib
 			
 			Tokenizer tokenizer = new Tokenizer();
 			_tokens = tokenizer.process(pTextReader);
+			_loopStack = new Stack<DialogueNode>();
 			
 			#if PRINT_TOKENS
 			Console.WriteLine("Tokens:");
@@ -137,7 +139,6 @@ namespace GrimmLib
 
 			ConversationStartDialogueNode startNode = _dialogueRunner.Create<ConversationStartDialogueNode>(_conversationName, _language, NAME_OF_START_NODE);
 			ConversationEndDialogueNode endNode = _dialogueRunner.Create<ConversationEndDialogueNode>(_conversationName, _language, NAME_OF_END_NODE);
-			
 			
 			#if DEBUG_WRITE
 			Console.WriteLine("Created a ConversationStartDialogueNode with name '" + startNode.name + "'");
@@ -361,7 +362,7 @@ namespace GrimmLib
 			n.handle = handleName;
 			
 			if(_loopStack.Count > 0) {
-				// Add this listening dialogue node to the scope of the loop so that it is automatically removed when the loop ends
+				// Add this listening dialogue node to the scope of the loop so that it is automatically removed as a listener when the loop ends
 				n.scopeNode = _loopStack.Peek().name;
 			}
 			
@@ -669,9 +670,6 @@ namespace GrimmLib
 				match(Token.TokenType.NEW_LINE);
 			}
 		}
-		
-		
-		Stack<DialogueNode> _loopStack = new Stack<DialogueNode>();
 		
 		private DialogueNode VisitLoopDialogueNode(DialogueNode pPrevious)
 		{
@@ -992,8 +990,14 @@ namespace GrimmLib
 				ConsumeCurrentToken();
 			}
 		}
+		
+		public string playerCharacterName {
+			get {
+				return _playerCharacterName;
+			}
+			set {
+				_playerCharacterName = value;
+			}
+		}
 	}
 }
-
-//ConversationEndDialogueNode endNode = pDialogueRunner.Create<ConversationEndDialogueNode>(conversationName, "End");	
-		
