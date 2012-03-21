@@ -3,10 +3,7 @@
 *.mdb
 *.pidb
 *.userprefs
-*/Relay.dll
 *.exe
-
-Grimm/bin/Debug/GameTypes.dll
 
 test-result
 
