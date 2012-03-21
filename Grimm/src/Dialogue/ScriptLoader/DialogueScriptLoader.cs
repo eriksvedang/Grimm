@@ -203,6 +203,9 @@ namespace GrimmLib
 			else if( lookAheadType(1) == Token.TokenType.START) {
 				return VisitStartCommandoDialogueNode(pPrevious);
 			}
+			else if( lookAheadType(1) == Token.TokenType.INTERRUPT) {
+				return VisitInterruptDialogueNode(pPrevious);
+			}
 			else if( lookAheadType(1) == Token.TokenType.IF) {
 				return VisitIfDialogueNode(pPrevious);
 			}
@@ -549,6 +552,27 @@ namespace GrimmLib
 			
 			#if DEBUG_WRITE
 			Console.WriteLine("Added StartCommandoDialogueNode() with name '" + n.name + "'");
+			#endif
+
+			AddLinkFromPreviousNode(pPrevious, n);
+			
+			return n;
+		}
+		
+		private InterruptDialogueNode VisitInterruptDialogueNode(DialogueNode pPrevious)
+		{			
+			#if DEBUG_WRITE
+			Console.WriteLine("InterruptDialogueNode()");
+			#endif			
+			
+			match(Token.TokenType.INTERRUPT);
+			string interruptingConversation = GetAStringFromNextToken(false, false);
+			
+			InterruptDialogueNode n = _dialogueRunner.Create<InterruptDialogueNode>(_conversationName, _language, (_nodeCounter++) + " (interrupt commando)");
+			n.interruptingConversation = interruptingConversation;
+			
+			#if DEBUG_WRITE
+			Console.WriteLine("Added InterruptDialogueNode() with name '" + n.name + "'");
 			#endif
 
 			AddLinkFromPreviousNode(pPrevious, n);

@@ -1,6 +1,7 @@
 using System;
 using GameTypes;
 using RelayLib;
+
 namespace GrimmLib
 {	
 	public class StartCommandoDialogueNode : DialogueNode

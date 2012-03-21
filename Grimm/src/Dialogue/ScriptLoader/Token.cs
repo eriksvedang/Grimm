@@ -34,6 +34,7 @@ namespace GrimmLib
 			
 			LANGUAGE,
 			START,
+			INTERRUPT,
 			WAIT,
 			ASSERT,
 			LOOP,

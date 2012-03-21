@@ -1103,6 +1103,43 @@ namespace GrimmLib.tests
 			Assert.IsFalse(dialogueRunner.ConversationIsRunning("conversation32"));
 			Assert.IsFalse(dialogueRunner.ConversationIsRunning("conversation31"));
 		}
+		
+		[Test()]
+		public void InterruptCommando()
+		{
+			_lines = new List<string>();
+			
+			RelayTwo relay = new RelayTwo();
+			relay.CreateTable(DialogueNode.TABLE_NAME);
+	
+			DialogueRunner dialogueRunner = new DialogueRunner(relay, Language.DEFAULT);
+			dialogueRunner.AddOnSomeoneSaidSomethingListener(OnSomeoneSaidSomething);
+			dialogueRunner.logger.AddListener(Console.WriteLine);
+			
+			DialogueScriptLoader scriptLoader = new DialogueScriptLoader(dialogueRunner);
+			scriptLoader.LoadDialogueNodesFromFile("../conversations/conversation1.dia");
+			scriptLoader.LoadDialogueNodesFromFile("../conversations/conversation33.dia");
+			
+			dialogueRunner.StartConversation("conversation33");
+			
+			for(int i = 0; i < 300; i++)
+			{
+				dialogueRunner.Update(0.1f);
+			}
+			
+			Assert.AreEqual(10, _lines.Count);
+			
+			Assert.AreEqual("before", 	_lines[0]);
+			Assert.AreEqual("", 		_lines[1]);
+			Assert.AreEqual("Hoho", 	_lines[2]);
+			Assert.AreEqual("", 		_lines[3]);
+			Assert.AreEqual("Hjälp!", 	_lines[4]);
+			Assert.AreEqual("",	 		_lines[5]);
+			Assert.AreEqual("Oh no", 	_lines[6]);
+			Assert.AreEqual("", 		_lines[7]);
+			Assert.AreEqual("after", 	_lines[8]);
+			Assert.AreEqual("",			_lines[9]);
+		}
 	}
 }
 
