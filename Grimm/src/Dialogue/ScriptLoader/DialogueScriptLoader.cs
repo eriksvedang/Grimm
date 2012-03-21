@@ -506,18 +506,28 @@ namespace GrimmLib
 			return n;
 		}
 		
-		private GotoDialogueNode VisitStopDialogueNode(DialogueNode pPrevious) {
+		private DialogueNode VisitStopDialogueNode(DialogueNode pPrevious) {
 			#if DEBUG_WRITE
 			Console.WriteLine("VisitStopDialogueNode()");
 			#endif			
 			
 			match(Token.TokenType.STOP);
 				
-			GotoDialogueNode n = _dialogueRunner.Create<GotoDialogueNode>(_conversationName, _language, (_nodeCounter++) + " (stop)");
-			n.linkedNode = NAME_OF_END_NODE;
+			StopDialogueNode n = null;
+			string nameOfConversationToStop = "";
+			
+			if(lookAheadType(1) == Token.TokenType.NAME || lookAheadType(1) == Token.TokenType.QUOTED_STRING) {
+				nameOfConversationToStop = GetAStringFromNextToken(true, false);
+			}
+			else {
+				nameOfConversationToStop = _conversationName;
+			}
+			
+			n = _dialogueRunner.Create<StopDialogueNode>(_conversationName, _language, (_nodeCounter++) + " (stop)");
+			n.conversationToStop = nameOfConversationToStop;
 			
 			#if DEBUG_WRITE
-			Console.WriteLine("Added Stopping GotoDialogueNode with name '" + n.name + "'");
+			Console.WriteLine("Added stopping node with name '" + n.name + "'");
 			#endif
 
 			AddLinkFromPreviousNode(pPrevious, n);

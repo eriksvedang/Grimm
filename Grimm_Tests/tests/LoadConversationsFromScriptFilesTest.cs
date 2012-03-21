@@ -592,6 +592,11 @@ namespace GrimmLib.tests
 				dialogueRunner.Update(1.0f);
 			}
 			
+			Console.WriteLine("OUTPUT:");
+			foreach(string s in _lines) {
+				Console.WriteLine(s);
+			}
+			
 			Assert.AreEqual(2, _lines.Count);
 			Assert.AreEqual("hej1", _lines[0]);
 			Assert.AreEqual("", _lines[1]);
@@ -1063,6 +1068,40 @@ namespace GrimmLib.tests
 			
 			DialogueScriptPrinter scriptPrinter = new DialogueScriptPrinter(dialogueRunner);
 			scriptPrinter.PrintConversation("conversation30");
+		}
+		
+		[Test()]
+		public void StopAnotherConversation()
+		{
+			_lines = new List<string>();
+			
+			RelayTwo relay = new RelayTwo();
+			relay.CreateTable(DialogueNode.TABLE_NAME);
+	
+			DialogueRunner dialogueRunner = new DialogueRunner(relay, Language.DEFAULT);
+			dialogueRunner.AddOnSomeoneSaidSomethingListener(OnSomeoneSaidSomething);
+			dialogueRunner.logger.AddListener(Console.WriteLine);
+			
+			DialogueScriptLoader scriptLoader = new DialogueScriptLoader(dialogueRunner);
+			scriptLoader.LoadDialogueNodesFromFile("../conversations/conversation32.dia");
+			scriptLoader.LoadDialogueNodesFromFile("../conversations/conversation31.dia");
+			
+			dialogueRunner.StartConversation("conversation32");
+			
+			for(int i = 0; i < 100; i++)
+			{
+				dialogueRunner.Update(0.1f);
+			}
+			
+			dialogueRunner.StartConversation("conversation31");
+			
+			for(int i = 0; i < 100; i++)
+			{
+				dialogueRunner.Update(0.1f);
+			}
+			
+			Assert.IsFalse(dialogueRunner.ConversationIsRunning("conversation32"));
+			Assert.IsFalse(dialogueRunner.ConversationIsRunning("conversation31"));
 		}
 	}
 }

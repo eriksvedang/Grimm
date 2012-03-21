@@ -65,6 +65,7 @@
     <Compile Include="src\Dialogue\Nodes\LoopDialogueNode.cs" />
     <Compile Include="src\Dialogue\Nodes\BreakDialogueNode.cs" />
     <Compile Include="src\Dialogue\IRegisteredDialogueNode.cs" />
+    <Compile Include="src\Dialogue\Nodes\StopDialogueNode.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

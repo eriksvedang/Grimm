@@ -127,6 +127,17 @@ namespace GrimmLib
 			}
 		}
 		
+		public void StopConversation(string pConverstation)
+		{
+			Console.WriteLine("Stopping conversation '" + pConverstation + "'");
+			foreach(DialogueNode n in _dialogueNodes) {
+				if(n.isOn && n.conversation == pConverstation) {
+					Console.WriteLine("Stopping node '" + n.name + "'");
+					n.Stop();
+				}
+			}
+		}
+		
 		public void RemoveConversation(string pConversation)
 		{
 			foreach (DialogueNode d in _dialogueNodes.ToArray())

@@ -79,6 +79,10 @@ namespace GrimmLib
 			{
 				PrintStartCommandoDialogueNode(pDialogueNode as StartCommandoDialogueNode);
 			}
+			else if(pDialogueNode is StopDialogueNode)
+			{
+				PrintStopCommandoDialogueNode(pDialogueNode as StopDialogueNode);
+			}
 			else if(pDialogueNode is WaitDialogueNode)
 			{
 				PrintWaitDialogueNode(pDialogueNode as WaitDialogueNode);
@@ -180,6 +184,15 @@ namespace GrimmLib
 			_output.Append("START " + pStartCommandoNode.commando + "\n");
 			
 			DialogueNode nextNode = _dialogueRunner.GetDialogueNode(_conversation, pStartCommandoNode.nextNode);
+			SwitchOnNode(nextNode);
+		}
+		
+		private void PrintStopCommandoDialogueNode(StopDialogueNode pStopNode)
+		{
+			Indentation();
+			_output.Append("STOP " + pStopNode.conversationToStop + "\n");
+			
+			DialogueNode nextNode = _dialogueRunner.GetDialogueNode(_conversation, pStopNode.nextNode);
 			SwitchOnNode(nextNode);
 		}
 		
