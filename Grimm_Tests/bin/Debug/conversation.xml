@@ -1,6 +1,0 @@
-Dialogues
-2
-["csharp-class","name","isOn","nextNode","conversation","language","scopeNode","timer","timerStartValue","speaker","line"]
-["System.String","System.String","System.Boolean","System.String","System.String","GameTypes.Language","System.String","System.Single","System.Single","System.String","System.String"]
-{"row":0,"values":["\"TimedDialogueNode\"","\"d1\"","false","\"\"","\"c\"","0","\"\"","2.0","2.0","\"A\"","\"\""]}
-{"row":1,"values":["\"TimedDialogueNode\"","\"d2\"","false","\"\"","\"c\"","0","\"\"","2.0","2.0","\"B\"","\"\""]}
