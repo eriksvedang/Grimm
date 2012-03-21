@@ -59,11 +59,17 @@ Monkey.Eat(Banana, "Munch munch", 5.0)
 # 10. Stop the execution of the script and unregister all listeners it contains
 STOP
 
+# Stopping another conversation works too
+STOP AnotherConversation
+
 # 11. Unregister event listeners with a specific name in the same file
 CANCEL DisasterEventListener
 
 # 12. Check an expression and throw and exception if it's not true
 ASSERT EveryoneIsSane()
+
+# 13. Start script X and stop execution of the current script until script X has stopped
+INTERRUPT X
 
 # Notes on syntactical sugar:
 # Expressions and functions can be written in two ways

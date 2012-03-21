@@ -8,7 +8,7 @@
 			<key>filename</key>
 			<string>conversation1.dia</string>
 			<key>lastUsed</key>
-			<date>2012-03-08T14:32:18Z</date>
+			<date>2012-03-21T15:18:34Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -56,7 +56,7 @@
 			<key>filename</key>
 			<string>conversation17.dia</string>
 			<key>lastUsed</key>
-			<date>2012-03-08T14:32:19Z</date>
+			<date>2012-03-21T15:18:34Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -135,8 +135,6 @@
 			<string>conversation9.dia</string>
 			<key>lastUsed</key>
 			<date>2012-03-08T14:32:21Z</date>
-			<key>selected</key>
-			<true/>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -168,6 +166,38 @@
 			<key>lastUsed</key>
 			<date>2012-03-08T14:32:18Z</date>
 		</dict>
+		<dict>
+			<key>filename</key>
+			<string>conversation28.dia</string>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>conversation29.dia</string>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>conversation30.dia</string>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>conversation33.dia</string>
+			<key>lastUsed</key>
+			<date>2012-03-21T15:18:34Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>conversation31.dia</string>
+			<key>lastUsed</key>
+			<date>2012-03-21T15:18:35Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>conversation32.dia</string>
+			<key>lastUsed</key>
+			<date>2012-03-21T15:18:35Z</date>
+			<key>selected</key>
+			<true/>
+		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
 	<integer>200</integer>
@@ -176,6 +206,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{765, 166}, {966, 700}}</string>
+	<string>{{413, 148}, {966, 700}}</string>
 </dict>
 </plist>
