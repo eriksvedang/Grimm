@@ -3,8 +3,10 @@
 *.mdb
 *.pidb
 *.userprefs
-*.exe
+*.json
+*.xml
+*.userprefs
 
-Debug
-Release
 test-results
+Debug/
+Release/
