@@ -55,7 +55,7 @@ namespace GrimmLib
 			}
 			DialogueNode n = _dialogueRunner.GetDialogueNode(this.conversation, nextNode);
 			//_dialogueRunner.logger.Log("DialogueNode '" + name + "' is starting '" + n.name + "'");
-			Console.WriteLine("DialogueNode '" + name + "' is starting '" + n.name + "'");
+			//Console.WriteLine("DialogueNode '" + name + "' is starting '" + n.name + "'");
 			n.Start();
 		}
 		
