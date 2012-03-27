@@ -6,9 +6,9 @@ namespace GrimmLib
 	{
 		public override void OnEnter()
 		{
+			_dialogueRunner.FocusConversation(conversation);
 			Stop();
 			StartNextNode();
-			_dialogueRunner.FocusConversation(conversation);
 		}
 	}
 	
@@ -16,9 +16,9 @@ namespace GrimmLib
 	{
 		public override void OnEnter()
 		{
+			_dialogueRunner.DefocusConversation(conversation);
 			Stop();
 			StartNextNode();
-			_dialogueRunner.DefocusConversation(conversation);
 		}
 	}
 }
