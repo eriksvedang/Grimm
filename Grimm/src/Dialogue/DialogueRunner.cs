@@ -280,12 +280,6 @@ namespace GrimmLib
 			logger.Log("Conversation '" + pConversation + "' ended");
 			foreach(IRegisteredDialogueNode l in _registeredDialogueNodes)
 			{
-				if(l == null) {
-					Console.WriteLine("NULL");
-				}
-				else {
-					Console.WriteLine(l.name);
-				}
 				if(l.conversation == pConversation) {
 					l.isListening = false;
 				}
@@ -339,12 +333,16 @@ namespace GrimmLib
 		/// </summary>
 		public void FocusConversation(string pConversation)
 		{
-			_onFocusConversation(pConversation);
+			if(_onFocusConversation != null) {
+				_onFocusConversation(pConversation);
+			}
 		}
 		
 		public void DefocusConversation(string pConversation)
 		{
-			_onDefocusConversation(pConversation);
+			if(_onDefocusConversation != null) {
+				_onDefocusConversation(pConversation);
+			}
 		}
 		
 		public Language language {

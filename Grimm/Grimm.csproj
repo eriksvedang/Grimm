@@ -73,13 +73,13 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\..\GameTypes\GameTypes\GameTypes.csproj">
-      <Project>{EC63C4E3-C5B8-4EB1-90CD-2D2FC17801BD}</Project>
-      <Name>GameTypes</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Relay\Relay\Relay.csproj">
       <Project>{9CFC0B9C-EC60-4488-9D4A-79F191AA5AFF}</Project>
       <Name>Relay</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GameTypes\GameTypes\GameTypes.csproj">
+      <Project>{EC63C4E3-C5B8-4EB1-90CD-2D2FC17801BD}</Project>
+      <Name>GameTypes</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

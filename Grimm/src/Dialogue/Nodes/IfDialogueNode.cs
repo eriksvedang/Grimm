@@ -34,7 +34,6 @@ namespace GrimmLib
 			bool hasFoundTruthyExpression = false;
 			
 			if(ifTrueNode.Evaluate()) {
-				Console.WriteLine("IF " + ifTrueNode.expression + " was true");
 				hasFoundTruthyExpression = true;
 				nextNode = ifTrueNode.nextNode; // jumping directly to the node after the expression
 			}
@@ -42,7 +41,6 @@ namespace GrimmLib
 			if(!hasFoundTruthyExpression) {
 				foreach(ExpressionDialogueNode e in elifNodes) {
 					if(e.Evaluate()) {
-						Console.WriteLine("ELIF " + e.expression + " was true");
 						hasFoundTruthyExpression = true;
 						nextNode = e.nextNode;
 					}
@@ -50,7 +48,6 @@ namespace GrimmLib
 			}
 			
 			if(!hasFoundTruthyExpression && ifFalseNode != null) {
-				Console.WriteLine("IF WAS FALSE; GOING INTO ELSE STATEMENT");
 				nextNode = ifFalseNode.nextNode;
 			}
 			
