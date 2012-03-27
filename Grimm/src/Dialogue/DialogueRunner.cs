@@ -129,10 +129,9 @@ namespace GrimmLib
 		
 		public void StopConversation(string pConverstation)
 		{
-			Console.WriteLine("Stopping conversation '" + pConverstation + "'");
+			logger.Log("Stopping conversation '" + pConverstation + "'");
 			foreach(DialogueNode n in _dialogueNodes) {
 				if(n.isOn && n.conversation == pConverstation) {
-					Console.WriteLine("Stopping node '" + n.name + "'");
 					n.Stop();
 				}
 			}
@@ -265,7 +264,7 @@ namespace GrimmLib
 		
 		public void EventHappened(string pEventName)
 		{
-			logger.Log("Event happened: '" + pEventName + "' (" + _registeredDialogueNodes.Count + " listening dialogue nodes)");
+			logger.Log("Event [" + pEventName + "]");
 			foreach(IRegisteredDialogueNode l in _registeredDialogueNodes)
 			{
 				ListeningDialogueNode listeningNode = l as ListeningDialogueNode;
@@ -353,7 +352,7 @@ namespace GrimmLib
 		
 		public override string ToString()
 		{
-			return string.Format("DialogueRunner ({0} dialogue nodes)", _dialogueNodes.Count);
+			return string.Format("DialogueRunner ({0} dialogue nodes, {1} registered dialogue nodes)", _dialogueNodes.Count, _registeredDialogueNodes);
 		}
 
 		private void RegisterBuiltInAPIExpressions()
