@@ -135,6 +135,11 @@ namespace GrimmLib
 					n.Stop();
 				}
 			}
+			foreach(IRegisteredDialogueNode i in _registeredDialogueNodes.ToArray()) {
+				if(i.conversation == pConverstation) {
+					_registeredDialogueNodes.Remove(i);
+				}
+			}
 		}
 		
 		public void RemoveConversation(string pConversation)
