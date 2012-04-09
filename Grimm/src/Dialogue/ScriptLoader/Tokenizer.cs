@@ -270,6 +270,9 @@ namespace GrimmLib
 			else if(tokenString.ToString() == "INTERRUPT") {
 				tokenType = Token.TokenType.INTERRUPT;
 			}
+			else if(tokenString.ToString() == "CHOICE") {
+				tokenType = Token.TokenType.CHOICE;
+			}
 			
 			return new Token(tokenType, tokenString.ToString());
 		}

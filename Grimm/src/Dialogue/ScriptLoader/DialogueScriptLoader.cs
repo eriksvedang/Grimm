@@ -248,6 +248,10 @@ namespace GrimmLib
 			else if(lookAheadType(1) == Token.TokenType.BRACKET_LEFT) {
 				return VisitEmptyNodeWithName(pPrevious);
 			}
+			else if ( lookAheadType(1) == Token.TokenType.CHOICE )
+			{
+				return VisitBranchingDialogueNode(pPrevious);
+			}
 			else 
             {
                 throw new GrimmException("Can't figure out statement type of token " + 
@@ -882,6 +886,10 @@ namespace GrimmLib
 			Console.WriteLine("NodesWithPlayerChoiceLinks()");
 			#endif
 			
+			if(lookAheadType(1) == Token.TokenType.CHOICE) {
+				match(Token.TokenType.CHOICE);
+			}
+			
 			match(Token.TokenType.BLOCK_BEGIN);
 			
 			BranchingDialogueNode bn = _dialogueRunner.Create<BranchingDialogueNode>(_conversationName, _language, (_nodeCounter++).ToString() + " (branching node)");
@@ -938,7 +946,8 @@ namespace GrimmLib
 				throw new GrimmException("Can't figure out player option statement type of token " + 
 				                    lookAheadType(1) + " with string " + 
 				                    lookAhead(1).getTokenString() + " on line " +
-				                    lookAhead(1).LineNr + " and position" + lookAhead(1).LinePosition);
+				                    lookAhead(1).LineNr + " and position" + lookAhead(1).LinePosition + " in conversation " +
+				                         _conversationName);
 			}
 			
 			return null;

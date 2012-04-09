@@ -357,7 +357,7 @@ namespace GrimmLib
 		
 		public override string ToString()
 		{
-			return string.Format("DialogueRunner ({0} dialogue nodes, {1} registered dialogue nodes)", _dialogueNodes.Count, _registeredDialogueNodes);
+			return string.Format("DialogueRunner ({0} dialogue nodes, {1} registered dialogue nodes)", _dialogueNodes.Count, _registeredDialogueNodes.Count);
 		}
 
 		private void RegisterBuiltInAPIExpressions()

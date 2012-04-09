@@ -32,6 +32,7 @@ namespace GrimmLib
 			ELSE,
 			ELIF,
 			
+			CHOICE,
 			LANGUAGE,
 			START,
 			INTERRUPT,

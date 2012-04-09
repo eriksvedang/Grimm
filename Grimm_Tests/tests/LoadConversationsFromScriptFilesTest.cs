@@ -1140,6 +1140,21 @@ namespace GrimmLib.tests
 			Assert.AreEqual("after", 	_lines[8]);
 			Assert.AreEqual("",			_lines[9]);
 		}
+		
+		[Test()]
+		public void ChoiceKeyword()
+		{
+			RelayTwo relay = new RelayTwo();
+			relay.CreateTable(DialogueNode.TABLE_NAME);
+	
+			DialogueRunner dialogueRunner = new DialogueRunner(relay, Language.DEFAULT);
+			
+			DialogueScriptLoader scriptLoader = new DialogueScriptLoader(dialogueRunner);
+			scriptLoader.LoadDialogueNodesFromFile("../conversations/conversation34.dia");
+			
+			DialogueScriptPrinter scriptPrinter = new DialogueScriptPrinter(dialogueRunner);
+			scriptPrinter.PrintConversation("conversation34");
+		}
 	}
 }
 
