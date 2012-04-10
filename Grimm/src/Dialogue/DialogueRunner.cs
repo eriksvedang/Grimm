@@ -270,7 +270,7 @@ namespace GrimmLib
 		public void EventHappened(string pEventName)
 		{
 			logger.Log("Event [" + pEventName + "]");
-			foreach(IRegisteredDialogueNode l in _registeredDialogueNodes)
+			foreach(IRegisteredDialogueNode l in _registeredDialogueNodes.ToArray())
 			{
 				ListeningDialogueNode listeningNode = l as ListeningDialogueNode;
 				if(listeningNode != null && l.isListening && listeningNode.eventName == pEventName) {

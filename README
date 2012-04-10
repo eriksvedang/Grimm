@@ -3,16 +3,26 @@ Requires the Relay database to work. Contains Textmate and Notepad++ bundles for
 
  - LANGUAGE OVERVIEW -
 
+# 0. Comments start with a '#'
+
 # 1. Make someone say something
 Charlie "What time is it?"
 
 # 2. Player is presented with dialogue options
-{
+CHOICE {
 	"It's 5.30":
 		Charlie "Ok, gotta run!"
 		
 	"I don't know":
 		Charlie "Oh, thanks anyway"
+}
+
+# Choices can also be written without the CHOICE-word (deprected but saved for compatibility)
+{
+	"Yes":
+		Charlie "OK"
+	"No":
+		Charlie "OK"
 }
 
 # 3. Jump to places marked with [ ] in the same file
