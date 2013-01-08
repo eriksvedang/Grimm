@@ -54,7 +54,7 @@ namespace GrimmLib
 				throw new GrimmException("No nextNode in dialogue node '" + name + "' in conversation '" + conversation + "'");
 			}
 			DialogueNode n = _dialogueRunner.GetDialogueNode(this.conversation, nextNode);
-			//_dialogueRunner.logger.Log("DialogueNode '" + name + "' is starting '" + n.name + "'");
+			//_dialogueRunner.logger.Log("DialogueNode '" + name + "' is starting '" + n.name + "'" + " of type " + n.GetType().ToString() + " in conversation " + n.conversation);
 			//Console.WriteLine("DialogueNode '" + name + "' is starting '" + n.name + "'");
 			n.Start();
 		}

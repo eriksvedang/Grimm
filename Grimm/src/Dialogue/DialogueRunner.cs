@@ -19,6 +19,7 @@ namespace GrimmLib
 		public delegate bool Expression(string[] args);
 		public delegate void Function(string[] args);
 		public delegate void OnFocusConversation(string pConversation);
+		public delegate void OnEvent(string pEventName);
 		
 		public Logger logger = new Logger();
 		
@@ -30,6 +31,7 @@ namespace GrimmLib
 		private Dictionary<string, Function> _functions = new Dictionary<string, Function>();
 		private List<IRegisteredDialogueNode> _registeredDialogueNodes = new List<IRegisteredDialogueNode>();
 		private event OnFocusConversation _onFocusConversation, _onDefocusConversation;
+		private event OnEvent _onEvent;
 		
         public DialogueRunner(RelayTwo pRelay, Language pLanguage)
         {
@@ -210,9 +212,11 @@ namespace GrimmLib
 #endif
 			Expression e = _expressions[pExpressionName];
 			bool result = e(args);
-			//if(result) {
-			//	logger.Log("Result of expression '" + pExpressionName + "' was true!");
-			//}
+			if(result) {
+				//logger.Log("Result of expression '" + pExpressionName + "' was true!");
+			} else {
+				//logger.Log("Result of expression '" + pExpressionName + "' was false...");
+			}
 			return result;
 		}
 		
@@ -266,6 +270,16 @@ namespace GrimmLib
 			d.CreateDialogueNodesFromString(pCommand, conversation);
 			StartConversation(conversation);
 		}
+
+		public void AddOnEventListener(OnEvent pOnEvent)
+		{
+			_onEvent += pOnEvent;
+		}
+
+		public void RemoveOnEventListener(OnEvent pOnEvent)
+		{
+			_onEvent -= pOnEvent;
+		}
 		
 		public void EventHappened(string pEventName)
 		{
@@ -276,6 +290,10 @@ namespace GrimmLib
 				if(listeningNode != null && l.isListening && listeningNode.eventName == pEventName) {
 					listeningNode.EventHappened();
 				}
+			}
+
+			if(_onEvent != null) {
+				_onEvent(pEventName);
 			}
 		}
 		
@@ -340,12 +358,18 @@ namespace GrimmLib
 			if(_onFocusConversation != null) {
 				_onFocusConversation(pConversation);
 			}
+			else {
+				throw new GrimmException("Trying to focus conversation " + pConversation + " but there is no onFocusConversation listener.");
+			}
 		}
 		
 		public void DefocusConversation(string pConversation)
 		{
 			if(_onDefocusConversation != null) {
 				_onDefocusConversation(pConversation);
+			}
+			else {
+				throw new GrimmException("Trying to defocus conversation " + pConversation + " but there is no onDefocusConversation listener.");
 			}
 		}
 		
