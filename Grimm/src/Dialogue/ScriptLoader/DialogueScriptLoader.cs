@@ -280,6 +280,7 @@ namespace GrimmLib
 			TimedDialogueNode n = _dialogueRunner.Create<TimedDialogueNode>(_conversationName, _language, (_nodeCounter++).ToString()); // + " (" + line + ")");
 			n.speaker = speaker;
 			n.line = line;
+			n.CalculateAndSetTimeBasedOnLineLength();
 			
 			if(lookAheadType(1) == Token.TokenType.BRACKET_LEFT) {
 				match(Token.TokenType.BRACKET_LEFT);
@@ -965,6 +966,7 @@ namespace GrimmLib
 			TimedDialogueNode optionNode = _dialogueRunner.Create<TimedDialogueNode>(_conversationName, _language, (_nodeCounter++).ToString());
 			optionNode.line = t.getTokenString();
 			optionNode.speaker = _playerCharacterName;
+			optionNode.CalculateAndSetTimeBasedOnLineLength();
 			
 			#if DEBUG_WRITE
 			Console.WriteLine("Created an option node with the name '" + optionNode.name + "'" + " and line " + "'" + optionNode.line + "'");

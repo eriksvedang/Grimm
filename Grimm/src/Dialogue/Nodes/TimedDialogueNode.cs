@@ -18,6 +18,11 @@ namespace GrimmLib
 			CELL_speaker = EnsureCell("speaker", "unknown");
 			CELL_line = EnsureCell("line", "");
 		}
+
+		public void CalculateAndSetTimeBasedOnLineLength()
+		{
+			timerStartValue = timer = 0.75f + line.Length * 0.05f;
+		}
 		
 		public override void OnEnter()
 		{
