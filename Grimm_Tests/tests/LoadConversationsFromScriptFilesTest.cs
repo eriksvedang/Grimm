@@ -1155,6 +1155,45 @@ namespace GrimmLib.tests
 			DialogueScriptPrinter scriptPrinter = new DialogueScriptPrinter(dialogueRunner);
 			scriptPrinter.PrintConversation("conversation34");
 		}
+
+		[Test()]
+		public void WaitForEvents()
+		{
+			_lines = new List<string>();
+
+			RelayTwo relay = new RelayTwo();
+			relay.CreateTable(DialogueNode.TABLE_NAME);
+	
+			DialogueRunner dialogueRunner = new DialogueRunner(relay, Language.DEFAULT);
+			dialogueRunner.AddOnSomeoneSaidSomethingListener(OnSomeoneSaidSomething);
+			dialogueRunner.logger.AddListener(Console.WriteLine);
+			dialogueRunner.AddExpression("Whatever", ((string[] args) => (true)));
+
+			DialogueScriptLoader scriptLoader = new DialogueScriptLoader(dialogueRunner);
+			scriptLoader.LoadDialogueNodesFromFile("../conversations/conversation35.dia");
+
+			//DialogueScriptPrinter scriptPrinter = new DialogueScriptPrinter(dialogueRunner);
+			//scriptPrinter.PrintConversation("conversation35");
+
+			dialogueRunner.StartConversation("conversation35");
+			for(int i = 0; i < 100; i++)
+			{
+				dialogueRunner.Update(0.5f);
+			}
+			
+			Assert.AreEqual(2, _lines.Count);
+			Assert.AreEqual("Yeah1", _lines[0]);
+
+			dialogueRunner.EventHappened("Bam");
+
+			for(int i = 0; i < 100; i++)
+			{
+				dialogueRunner.Update(0.5f);
+			}
+
+			Assert.AreEqual(4, _lines.Count);
+			Assert.AreEqual("Yeah2", _lines[2]);
+		}
 	}
 }
 

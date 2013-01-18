@@ -81,6 +81,11 @@ ASSERT EveryoneIsSane()
 # 13. Start script X and stop execution of the current script until script X has stopped
 INTERRUPT X
 
+# 14. Combine WAIT for expression with LISTEN for event
+WAIT IsNice() AND IsSummer() LISTEN IceCreamTime {
+	Dude "Let's eat ice cream!"
+}
+
 # Notes on syntactical sugar:
 # Expressions and functions can be written in two ways
 Player.TeleportTo(StartPosition)

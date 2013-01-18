@@ -596,6 +596,8 @@ namespace GrimmLib
 			WaitDialogueNode n = _dialogueRunner.Create<WaitDialogueNode>(_conversationName, _language, (_nodeCounter++) + " (start commando)");
 			
 			List<ExpressionDialogueNode> expressionNodes = new List<ExpressionDialogueNode>();
+
+			bool hasEventListener = false;
 			
 			while(true) {
 				
@@ -612,6 +614,18 @@ namespace GrimmLib
 				else if(lookAheadType(1) == Token.TokenType.AND)
 				{
 					ConsumeCurrentToken();
+				}
+				else if(lookAheadType(1) == Token.TokenType.LISTEN)
+				{
+					if(hasEventListener) {
+						throw new GrimmException(_conversationName + " already has a event listener attached to the wait statement on line " + lookAhead(1).LineNr);
+					}
+					ConsumeCurrentToken();
+					n.eventName = match(Token.TokenType.NAME).getTokenString();
+					hasEventListener = true;
+					#if DEBUG_WRITE
+					Console.WriteLine("This WaitDialogueNode has an event called " + n.eventName);
+					#endif
 				}
 				else {
 					break;

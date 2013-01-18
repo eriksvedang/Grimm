@@ -11,6 +11,7 @@ namespace GrimmLib
 		ValueEntry<string> CELL_handle;
 		ValueEntry<bool> CELL_isListening;
 		ValueEntry<string[]> CELL_expressions;
+		ValueEntry<string> CELL_eventName;
 		
 		protected override void SetupCells()
 		{
@@ -20,6 +21,7 @@ namespace GrimmLib
 			CELL_handle = EnsureCell("handle", "");
 			CELL_isListening = EnsureCell("isListening", false);
 			CELL_expressions = EnsureCell("expressions", new string[] {});
+			CELL_eventName = EnsureCell("eventName", "");
 		}
 		
 		public override void OnEnter()
@@ -28,11 +30,18 @@ namespace GrimmLib
 				StartNextNode();
 			}
 			isListening = true;
-			Evaluate();
+
+			if(eventName == "") { // If this is set the node can only trigger on events
+				Evaluate(); 
+			}
 		}
 		
 		public override void Update(float dt)
 		{
+			if(eventName != "") {
+				return;
+			}
+
 			if(isListening) {
 				Evaluate();
 			}
@@ -56,6 +65,12 @@ namespace GrimmLib
 			else {
 				StartNextNode();
 			}
+		}
+
+		public void EventHappened()
+		{
+			_dialogueRunner.logger.Log("The event of WaitDialogueNode '" + name + "' in conversation '" + conversation + "' happened");
+			Evaluate();
 		}
 		
 		public bool hasBranch
@@ -95,6 +110,16 @@ namespace GrimmLib
 			}
 			set {
 				CELL_isListening.data = value;
+			}
+		}
+
+		public string eventName
+		{
+			get {
+				return CELL_eventName.data;
+			}
+			set {
+				CELL_eventName.data = value;
 			}
 		}
 		

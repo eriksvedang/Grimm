@@ -8,5 +8,7 @@ namespace GrimmLib
 		string conversation { get; set; }
 		string name { get; set; }
 		bool isListening { get; set; }
+		string eventName { get; set; }
+		void EventHappened();
 	}
 }

@@ -221,7 +221,15 @@ namespace GrimmLib
 		private void PrintWaitDialogueNode(WaitDialogueNode pWaitNode)
 		{
 			Indentation();
-			_output.Append("WAIT_UNTIL "); // + pWaitNode.expression + "\n");
+			_output.Append("WAIT_UNTIL expressions: ");
+
+			foreach(var e in pWaitNode.expressions) {
+				_output.Append(e.expression + ", ");
+			}
+			if(pWaitNode.eventName != "") {
+				_output.Append("LISTEN for event: " + pWaitNode.eventName);
+			}
+			_output.Append("\n");
 			
 			DialogueNode nextNode = _dialogueRunner.GetDialogueNode(_conversation, pWaitNode.nextNode);
 			SwitchOnNode(nextNode);

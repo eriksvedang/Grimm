@@ -60,7 +60,7 @@ namespace GrimmLib
 			newDialogueNode.name = pName;
 			newDialogueNode.SetRunner(this);
 			_dialogueNodes.Add(newDialogueNode);
-			if(newDialogueNode is ListeningDialogueNode) {
+			if(newDialogueNode is IRegisteredDialogueNode) {
 				IRegisteredDialogueNode ir = newDialogueNode as IRegisteredDialogueNode;
 				_registeredDialogueNodes.Add(ir);
 			}
@@ -210,6 +210,8 @@ namespace GrimmLib
 				throw new GrimmException("Can't find expression '" + pExpressionName + "' in Dialogue Runner");
 			}
 #endif
+			//Console.WriteLine(System.Environment.StackTrace.ToString());
+
 			Expression e = _expressions[pExpressionName];
 			bool result = e(args);
 			if(result) {
@@ -284,10 +286,9 @@ namespace GrimmLib
 		public void EventHappened(string pEventName)
 		{
 			logger.Log("Event [" + pEventName + "]");
-			foreach(IRegisteredDialogueNode l in _registeredDialogueNodes.ToArray())
+			foreach(IRegisteredDialogueNode listeningNode in _registeredDialogueNodes.ToArray())
 			{
-				ListeningDialogueNode listeningNode = l as ListeningDialogueNode;
-				if(listeningNode != null && l.isListening && listeningNode.eventName == pEventName) {
+				if(listeningNode.isListening && listeningNode.eventName == pEventName) {
 					listeningNode.EventHappened();
 				}
 			}
