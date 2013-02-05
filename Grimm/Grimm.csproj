@@ -67,6 +67,7 @@
     <Compile Include="src\Dialogue\IRegisteredDialogueNode.cs" />
     <Compile Include="src\Dialogue\Nodes\StopDialogueNode.cs" />
     <Compile Include="src\Dialogue\Nodes\InterruptDialogueNode.cs" />
+    <Compile Include="src\Dialogue\Nodes\TimedWaitDialogueNode.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

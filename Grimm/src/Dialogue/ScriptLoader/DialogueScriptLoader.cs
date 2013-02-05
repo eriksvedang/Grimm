@@ -225,7 +225,12 @@ namespace GrimmLib
 				return VisitCancelDialogueNode(pPrevious);
 			}
 			else if( lookAheadType(1) == Token.TokenType.WAIT) {
-				return VisitWaitDialogueNode(pPrevious);
+				if(lookAheadType(2) == Token.TokenType.NUMBER) {
+					return VisitTimedWaitDialogueNode(pPrevious);
+				}
+				else {
+					return VisitWaitDialogueNode(pPrevious);
+				}
 			}
 			else if( lookAheadType(1) == Token.TokenType.FOCUS) {
 				return VisitFocusDialogueNode(pPrevious);
@@ -584,6 +589,27 @@ namespace GrimmLib
 			
 			return n;
 		}
+
+		private TimedWaitDialogueNode VisitTimedWaitDialogueNode(DialogueNode pPrevious)
+		{
+			#if DEBUG_WRITE
+			Console.WriteLine("TimedWaitDialogueNode()");
+			#endif
+
+			match(Token.TokenType.WAIT);
+			Token time = match(Token.TokenType.NUMBER);
+
+			TimedWaitDialogueNode node = _dialogueRunner.Create<TimedWaitDialogueNode>(_conversationName, _language, (_nodeCounter++) + " (timed wait node)");
+			node.timer = node.timerStartValue = Convert.ToSingle(time.getTokenString());
+
+			#if DEBUG_WRITE
+			Console.WriteLine("Added TimedWaitDialogueNode() with name '" + node.name + "'");
+			#endif
+
+			AddLinkFromPreviousNode(pPrevious, node);
+
+			return node;
+		}
 		
 		private WaitDialogueNode VisitWaitDialogueNode(DialogueNode pPrevious)
 		{
@@ -600,7 +626,7 @@ namespace GrimmLib
 			bool hasEventListener = false;
 			
 			while(true) {
-				
+
 				if(lookAheadType(1) == Token.TokenType.NAME) 
 				{						
 					string expressionName = "";

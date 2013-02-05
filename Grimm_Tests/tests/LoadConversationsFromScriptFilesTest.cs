@@ -1194,6 +1194,34 @@ namespace GrimmLib.tests
 			Assert.AreEqual(4, _lines.Count);
 			Assert.AreEqual("Yeah2", _lines[2]);
 		}
+
+		[Test()]
+		public void WaitSpecifiedTime()
+		{
+			_lines = new List<string>();
+
+			RelayTwo relay = new RelayTwo();
+			relay.CreateTable(DialogueNode.TABLE_NAME);
+	
+			DialogueRunner dialogueRunner = new DialogueRunner(relay, Language.DEFAULT);
+			dialogueRunner.AddOnSomeoneSaidSomethingListener(OnSomeoneSaidSomething);
+			dialogueRunner.logger.AddListener(Console.WriteLine);
+
+			DialogueScriptLoader scriptLoader = new DialogueScriptLoader(dialogueRunner);
+			scriptLoader.LoadDialogueNodesFromFile("../conversations/conversation36.dia");
+
+			DialogueScriptPrinter scriptPrinter = new DialogueScriptPrinter(dialogueRunner);
+			scriptPrinter.PrintConversation("conversation36");
+
+			dialogueRunner.StartConversation("conversation36");
+
+			dialogueRunner.Update(1.0f);
+			Assert.AreEqual(0, _lines.Count);
+
+			dialogueRunner.Update(3.0f);
+			Assert.AreEqual(2, _lines.Count);
+			Assert.AreEqual("Woo!", _lines[0]);
+		}
 	}
 }
 

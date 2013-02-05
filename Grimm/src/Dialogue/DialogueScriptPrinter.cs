@@ -135,6 +135,10 @@ namespace GrimmLib
 			{
 				PrintExpressionDialogueNode(pDialogueNode as ExpressionDialogueNode);
 			}
+			else if(pDialogueNode is TimedWaitDialogueNode)
+			{
+				PrintTimedWaitDialogueNode(pDialogueNode as TimedWaitDialogueNode);
+			}
 			else
 			{
 				throw new GrimmException("Don't understand node type " + pDialogueNode.GetType());
@@ -368,6 +372,16 @@ namespace GrimmLib
 			_output.Append("Expression " + pExpressionNode.expression + "\n");
 			
 			DialogueNode nextNode = _dialogueRunner.GetDialogueNode(_conversation, pExpressionNode.nextNode);
+			SwitchOnNode(nextNode);
+		}
+
+		private void PrintTimedWaitDialogueNode(TimedWaitDialogueNode pTimedWaitDialogueNode)
+		{
+			Indentation();
+			
+			_output.Append("TimedWaitDialogueNode\n");
+			
+			DialogueNode nextNode = _dialogueRunner.GetDialogueNode(_conversation, pTimedWaitDialogueNode.nextNode);
 			SwitchOnNode(nextNode);
 		}
 	

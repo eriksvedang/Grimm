@@ -86,6 +86,9 @@ WAIT IsNice() AND IsSummer() LISTEN IceCreamTime {
 	Dude "Let's eat ice cream!"
 }
 
+# 15. Wait for a certain time (in seconds)
+WAIT 10
+
 # Notes on syntactical sugar:
 # Expressions and functions can be written in two ways
 Player.TeleportTo(StartPosition)
