@@ -94,12 +94,29 @@ namespace GrimmLib
 		}
 
 		/// <returns>
-		/// Returns null if there is no active dialogue node in the conversation
+		/// Returns null if there is no active branching dialogue node in the conversation
 		/// </returns>
-		public DialogueNode GetActiveDialogueNode(string pConversation)
+		public BranchingDialogueNode GetActiveBranchingDialogueNode(string pConversation)
 		{
-			DialogueNode n = _dialogueNodes.Find(o => (o.language == _language && o.conversation == pConversation && o.isOn));
+			BranchingDialogueNode n = _dialogueNodes.Find(o => 
+			                                     (o.isOn) &&
+			                                     (o.language == _language) && 
+			                                     (o.conversation == pConversation) &&
+			                                     (o is BranchingDialogueNode)
+			                                     ) as BranchingDialogueNode;
 			return n;
+		}
+
+		private void CheckThatThereIsOnlyOneActiveNodeInTheConversation(string pConversation)
+		{
+			DialogueNode[] nodes = _dialogueNodes.FindAll(o => (o.language == _language && o.conversation == pConversation && o.isOn)).ToArray();
+			if(nodes.Length > 1) {
+				StringBuilder sb = new StringBuilder();
+				foreach(var node in nodes) {
+					sb.Append(node.name + ", ");
+				}
+				throw new GrimmException("There are " + nodes.Length + " active nodes in the conversation " + pConversation + ": " + sb.ToString());
+			}
 		}
 		
 		public bool ConversationIsRunning(string pConversation)
@@ -112,6 +129,11 @@ namespace GrimmLib
 		/// </summary>
 		public void StartConversation(string pConversation)
 		{
+			if(ConversationIsRunning(pConversation)) {
+				logger.Log("Trying to start conversation " + pConversation + " again, even though it's already running");
+				return;
+			}
+
 			DialogueNode conversationStartNode = 
 				_dialogueNodes.Find(o => (o.language == _language && o.conversation == pConversation && o is ConversationStartDialogueNode));
 			
