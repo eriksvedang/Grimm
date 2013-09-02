@@ -17,7 +17,12 @@ namespace GrimmLib
 		public override void OnEnter()
 		{
 			Stop();
-			_dialogueRunner.CallFunction(function, args);
+			try {
+				_dialogueRunner.CallFunction(function, args);
+			}
+			catch(Exception e) {
+				throw new GrimmException("Error when calling function " + function + " in " + conversation + " with args: " + string.Join(", ", args) + " e: " + e.Message);
+			}
 			StartNextNode();
 		}
 		

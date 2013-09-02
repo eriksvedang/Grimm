@@ -41,7 +41,12 @@ namespace GrimmLib
 
 		public bool Evaluate()
 		{
-			return _dialogueRunner.EvaluateExpression(expression, args);
+			try {
+				return _dialogueRunner.EvaluateExpression(expression, args);
+			}
+			catch(Exception e) {
+				throw new GrimmException("Error when evaluating expression " + expression + " in " + conversation + " with args: " + string.Join(", ", args) + " e: " + e.Message);
+			}
 		}
 	}
 }
