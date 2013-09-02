@@ -49,7 +49,7 @@ namespace InteractiveDialogueTester
 				//printer.PrintConversation(conversationName);
 				
 				dialogueRunner.Update(1.0f);
-				DialogueNode activeDialogueNode = dialogueRunner.GetActiveDialogueNode(conversationName);
+				DialogueNode activeDialogueNode = dialogueRunner.GetActiveBranchingDialogueNode(conversationName);
 				if(activeDialogueNode is BranchingDialogueNode)
 				{
 					BranchingDialogueNode branchingNode = activeDialogueNode as BranchingDialogueNode;

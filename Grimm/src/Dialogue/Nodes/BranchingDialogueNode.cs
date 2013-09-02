@@ -1,6 +1,8 @@
 using System;
 using GameTypes;
 using RelayLib;
+using System.Collections.Generic;
+
 namespace GrimmLib
 {
 	public class BranchingDialogueNode : DialogueNode
@@ -29,7 +31,24 @@ namespace GrimmLib
 			D.assert(pOptionNr >= 0);
 			D.assert(pOptionNr < nextNodes.Length);
 			string nameOfChosenNode = nextNodes[pOptionNr];
-			nextNode = nameOfChosenNode;	
+			if (nextNodes.Length > 1) {
+				RemoveOptionFromNextNodes (pOptionNr);
+			}
+			nextNode = nameOfChosenNode;
+		}
+
+		void RemoveOptionFromNextNodes (int pOptionNr)
+		{
+			string[] oldOptions = CELL_nextNodes.data;
+			List<string> newOptions = new List<string> ();
+			for (int i = 0; i < oldOptions.Length; i++) {
+				if (i == pOptionNr) {
+					continue;
+				} else {
+					newOptions.Add (oldOptions [i]);
+				}
+			}
+			CELL_nextNodes.data = newOptions.ToArray();
 		}
 		
 		#region ACCESSORS

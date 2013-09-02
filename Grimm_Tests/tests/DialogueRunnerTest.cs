@@ -179,7 +179,7 @@ namespace GrimmLib.tests
 			
 			start.Start();
 			
-			BranchingDialogueNode branchingNode = dialogueRunner.GetActiveDialogueNode("Snack") as BranchingDialogueNode;
+			BranchingDialogueNode branchingNode = dialogueRunner.GetActiveBranchingDialogueNode("Snack");
 			
 			List<string> options = new List<string>();
 			foreach(string nextNodeName in branchingNode.nextNodes)
@@ -192,7 +192,7 @@ namespace GrimmLib.tests
 			Assert.AreEqual("b", options[1]);
 			Assert.AreEqual("c", options[2]);
 			
-			DialogueNode activeDialogueNode = dialogueRunner.GetActiveDialogueNode("Snack");
+			DialogueNode activeDialogueNode = dialogueRunner.GetActiveBranchingDialogueNode("Snack");
 			
 			Assert.AreEqual("choice", activeDialogueNode.name);
 			
