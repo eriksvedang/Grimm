@@ -108,7 +108,7 @@ namespace GrimmLib.tests
 			loader.LoadDialogueNodesFromFile("../conversations/conversation3.dia");			
 			
 			_dialogueRunner.StartConversation("conversation3");
-			BranchingDialogueNode n = _dialogueRunner.GetActiveDialogueNode("conversation3") as BranchingDialogueNode;
+			BranchingDialogueNode n = _dialogueRunner.GetActiveBranchingDialogueNode("conversation3");
 			
 			Assert.IsNotNull(n);
 			TimedDialogueNode option1 = _dialogueRunner.GetDialogueNode("conversation3", n.nextNodes[0]) as TimedDialogueNode;
@@ -1221,6 +1221,51 @@ namespace GrimmLib.tests
 			dialogueRunner.Update(3.0f);
 			Assert.AreEqual(2, _lines.Count);
 			Assert.AreEqual("Woo!", _lines[0]);
+		}
+
+		string GetTextFromOption(BranchingDialogueNode branchingNode, int nr)
+		{
+			string conversationName = branchingNode.conversation;
+			TimedDialogueNode option = _dialogueRunner.GetDialogueNode(conversationName, branchingNode.nextNodes[nr]) as TimedDialogueNode;
+			return option.line;
+		}
+
+		[Test()]
+		public void RemoveOptionsAfterTheyHaveBeenSelected()
+		{
+			DialogueScriptLoader loader = new DialogueScriptLoader(_dialogueRunner);
+			loader.LoadDialogueNodesFromFile("../conversations/conversation37.dia");			
+
+			_dialogueRunner.StartConversation("conversation37");
+			BranchingDialogueNode n = _dialogueRunner.GetActiveBranchingDialogueNode("conversation37");
+
+			Assert.IsNotNull(n);
+			Assert.AreEqual (3, n.nextNodes.Length);
+			Assert.AreEqual ("a", GetTextFromOption (n, 0));
+			Assert.AreEqual ("b", GetTextFromOption (n, 1));
+			Assert.AreEqual ("c", GetTextFromOption (n, 2));
+
+			n.Choose (1);
+
+			for (int i = 0; i < 100; i++) {
+				_dialogueRunner.Update (0.1f);
+			}
+
+			BranchingDialogueNode sameNodeButLaterAfterLooping = _dialogueRunner.GetActiveBranchingDialogueNode("conversation37");
+			Assert.AreEqual (2, sameNodeButLaterAfterLooping.nextNodes.Length);
+			Assert.AreEqual ("a", GetTextFromOption (sameNodeButLaterAfterLooping, 0));
+			Assert.AreEqual ("c", GetTextFromOption (sameNodeButLaterAfterLooping, 1));
+
+			n.Choose (1);
+
+			BranchingDialogueNode nodeAgain = _dialogueRunner.GetActiveBranchingDialogueNode("conversation37");
+			Assert.AreEqual (1, nodeAgain.nextNodes.Length);
+			Assert.AreEqual ("a", GetTextFromOption (nodeAgain, 0));
+
+			n.Choose (0);
+
+			BranchingDialogueNode finalTime = _dialogueRunner.GetActiveBranchingDialogueNode("conversation37");
+			Assert.AreEqual (0, finalTime.nextNodes.Length);
 		}
 	}
 }

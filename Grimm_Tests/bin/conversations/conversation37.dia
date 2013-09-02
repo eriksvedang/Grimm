@@ -1,0 +1,10 @@
+
+[AGAIN]
+
+CHOICE {
+	"a":
+	"b":
+	"c":
+}
+
+GOTO AGAIN
