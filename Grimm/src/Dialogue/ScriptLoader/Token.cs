@@ -46,7 +46,9 @@ namespace GrimmLib
 			CANCEL,
 			FOCUS,
 			DEFOCUS,
-			AND
+			AND,
+			
+			ETERNAL
 			
 		};
 		

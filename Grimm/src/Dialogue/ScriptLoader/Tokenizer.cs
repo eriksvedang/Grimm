@@ -273,6 +273,9 @@ namespace GrimmLib
 			else if(tokenString.ToString() == "CHOICE") {
 				tokenType = Token.TokenType.CHOICE;
 			}
+			else if(tokenString.ToString() == "ETERNAL") {
+				tokenType = Token.TokenType.ETERNAL;
+			}
 			
 			return new Token(tokenType, tokenString.ToString());
 		}

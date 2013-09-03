@@ -453,6 +453,9 @@ namespace GrimmLib
 				if(lookAheadType(1) == Token.TokenType.PARANTHESIS_RIGHT) {
 					break;
 				}
+				else if(lookAheadType(1) == Token.TokenType.NEW_LINE) {
+					match(Token.TokenType.NEW_LINE);
+				}
 				else {
 					string argumentString = GetAStringFromNextToken(true, true);
 					#if DEBUG_WRITE
@@ -931,6 +934,11 @@ namespace GrimmLib
 				match(Token.TokenType.CHOICE);
 			}
 			
+			bool eternal = lookAheadType(1) == Token.TokenType.ETERNAL;
+			if(eternal) {
+				match(Token.TokenType.ETERNAL);
+			}
+			
 			match(Token.TokenType.BLOCK_BEGIN);
 			
 			BranchingDialogueNode bn = _dialogueRunner.Create<BranchingDialogueNode>(_conversationName, _language, (_nodeCounter++).ToString() + " (branching node)");
@@ -956,7 +964,8 @@ namespace GrimmLib
 				}
 			}
 			
-			bn.nextNodes = nameOfPossibleOptions.ToArray();			
+			bn.nextNodes = nameOfPossibleOptions.ToArray();
+			bn.eternal = eternal;
 			
 			match(Token.TokenType.BLOCK_END);
 			

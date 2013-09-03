@@ -9,12 +9,14 @@ namespace GrimmLib
 	{
 		ValueEntry<string[]> CELL_nextNodes;
 		ValueEntry<string> CELL_unifiedEndNodeForScope;
+		ValueEntry<bool> CELL_eternal;
 		
 		protected override void SetupCells()
 		{
 			base.SetupCells ();
 			CELL_nextNodes = EnsureCell("nextNodes", new string[] {});
 			CELL_unifiedEndNodeForScope = EnsureCell("unifiedEndNodeForScope", "");
+			CELL_eternal = EnsureCell<bool>("eternal", false);
 		}
 		
 		public override void Update(float dt)
@@ -31,7 +33,7 @@ namespace GrimmLib
 			D.assert(pOptionNr >= 0);
 			D.assert(pOptionNr < nextNodes.Length);
 			string nameOfChosenNode = nextNodes[pOptionNr];
-			if (nextNodes.Length > 1) {
+			if (!eternal && nextNodes.Length > 1) {
 				RemoveOptionFromNextNodes (pOptionNr);
 			}
 			nextNode = nameOfChosenNode;
@@ -75,7 +77,16 @@ namespace GrimmLib
 			set {
 				CELL_unifiedEndNodeForScope.data = value;
 			}
-		}			
+		}
+		
+		public bool eternal {
+			get {
+				return CELL_eternal.data;
+			}
+			set {
+				CELL_eternal.data = value;
+			}
+		}
 		
 		#endregion
 	}
