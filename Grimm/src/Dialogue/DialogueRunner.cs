@@ -151,12 +151,24 @@ namespace GrimmLib
 			}
 		}
 
+		void StartIfNotStarted(ConversationStartDialogueNode pNode) {
+			if(!ConversationIsRunning(pNode.conversation)) { 
+				pNode.Start ();
+			}
+		}
+
+		void StopIfStarted(ConversationStartDialogueNode pNode) {
+			if(ConversationIsRunning(pNode.conversation)) { 
+				pNode.Start ();
+			}
+		}
+
 		/// <summary>
 		/// Start all conversations with a name containing some string
 		/// </summary>
 		public void StartAllConversationsContaining(string pPartialName)
 		{
-			DoSomethingToAllConversationsContaining (pPartialName, o => o.Start (), "Started");
+			DoSomethingToAllConversationsContaining (pPartialName, StartIfNotStarted, "Started");
 		}
 
 		/// <summary>
@@ -164,7 +176,7 @@ namespace GrimmLib
 		/// </summary>
 		public void StopAllConversationsContaining(string pPartialName)
 		{
-			DoSomethingToAllConversationsContaining (pPartialName, o => o.Stop (), "Stopped");
+			DoSomethingToAllConversationsContaining (pPartialName, StopIfStarted, "Stopped");
 		}
 
 		private void DoSomethingToAllConversationsContaining(string pPartialName, Action<ConversationStartDialogueNode> pAction, string pDescription)
