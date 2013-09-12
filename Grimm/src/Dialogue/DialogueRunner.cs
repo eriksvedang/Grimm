@@ -152,19 +152,19 @@ namespace GrimmLib
 		}
 
 		/// <summary>
-		/// Start all conversations with a name containing some string
+		/// Start all non-running conversations with a name containing some string
 		/// </summary>
 		public string[] StartAllConversationsContaining(string pPartialName)
 		{
-			return DoSomethingToAllConversationsContaining (pPartialName, o => !ConversationIsRunning(o.conversation), o => o.Start(), "Started");
+			return DoSomethingToAllConversationsContaining (pPartialName, o => !ConversationIsRunning(o.conversation), convStartNode => convStartNode.Start(), "Started");
 		}
 
 		/// <summary>
-		/// Stop all conversations with a name containing some string
+		/// Stop all running conversations with a name containing some string
 		/// </summary>
 		public string[] StopAllConversationsContaining(string pPartialName)
 		{
-			return DoSomethingToAllConversationsContaining (pPartialName, o => ConversationIsRunning(o.conversation), o => o.Stop(), "Stopped");
+			return DoSomethingToAllConversationsContaining (pPartialName, o => ConversationIsRunning(o.conversation), convStartNode => StopConversation(convStartNode.conversation), "Stopped");
 		}
 
 		private string[] DoSomethingToAllConversationsContaining(string pPartialName, Predicate<DialogueNode> pPred, Action<ConversationStartDialogueNode> pAction, string pDescription)
