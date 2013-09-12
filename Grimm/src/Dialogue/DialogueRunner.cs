@@ -150,7 +150,43 @@ namespace GrimmLib
 				}
 			}
 		}
-		
+
+		/// <summary>
+		/// Start all conversations with a name containing some string
+		/// </summary>
+		public void StartAllConversationsContaining(string pPartialName)
+		{
+			DoSomethingToAllConversationsContaining (pPartialName, o => o.Start (), "Started");
+		}
+
+		/// <summary>
+		/// Stop all conversations with a name containing some string
+		/// </summary>
+		public void StopAllConversationsContaining(string pPartialName)
+		{
+			DoSomethingToAllConversationsContaining (pPartialName, o => o.Stop (), "Stopped");
+		}
+
+		private void DoSomethingToAllConversationsContaining(string pPartialName, Action<ConversationStartDialogueNode> pAction, string pDescription)
+		{
+			var conversations = GetAllConversationsWithNameContaining (pPartialName);
+			conversations.ForEach (pAction);
+			logger.Log (pDescription + " " + conversations.Count + " conversations with partial name " + pPartialName);
+		}
+
+		private List<ConversationStartDialogueNode> GetAllConversationsWithNameContaining(string pPartialName) 
+		{
+			var foundNodes = new List<ConversationStartDialogueNode> ();
+			foreach (var node in _dialogueNodes) {
+				if (node is ConversationStartDialogueNode &&
+					node.name.Contains (pPartialName)) 
+				{
+					foundNodes.Add (node as ConversationStartDialogueNode);
+				}
+			}
+			return foundNodes;
+		}
+
 		public void StopConversation(string pConverstation)
 		{
 			logger.Log("Stopping conversation '" + pConverstation + "'");
@@ -410,12 +446,24 @@ namespace GrimmLib
 		private void RegisterBuiltInAPIExpressions()
 		{
 			AddExpression("IsActive", IsActive);
+			AddFunction ("StartAll", StartAll);
+			AddFunction ("StopAll", StopAll);
 		}
 		
 		// IsActive(string conversation)
 		private bool IsActive(string[] args)
 		{
 			return ConversationIsRunning(args[0]);
+		}
+
+		// StartAll(string pPartialName)
+		private void StartAll(string[] args) {
+			StartAllConversationsContaining (args [0]);
+		}
+
+		// StopAll(string pPartialName)
+		private void StopAll(string[] args) {
+			StopAllConversationsContaining (args [0]);
 		}
     }    
 }

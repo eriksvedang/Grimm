@@ -1265,7 +1265,10 @@ namespace GrimmLib.tests
 			n.Choose (0);
 
 			BranchingDialogueNode finalTime = _dialogueRunner.GetActiveBranchingDialogueNode("conversation37");
-			Assert.AreEqual (0, finalTime.nextNodes.Length);
+
+			// RIGHT NOW THE LAST CHOICE ISN'T REMOVED TO AVOID GETTING STUCK WITH ZERO OPTIONS
+
+			//Assert.AreEqual (0, finalTime.nextNodes.Length);
 		}
 	}
 }
