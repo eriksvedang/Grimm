@@ -151,52 +151,48 @@ namespace GrimmLib
 			}
 		}
 
-		void StartIfNotStarted(ConversationStartDialogueNode pNode) {
-			if(!ConversationIsRunning(pNode.conversation)) { 
-				pNode.Start ();
-			}
-		}
-
-		void StopIfStarted(ConversationStartDialogueNode pNode) {
-			if(ConversationIsRunning(pNode.conversation)) { 
-				pNode.Start ();
-			}
-		}
-
 		/// <summary>
 		/// Start all conversations with a name containing some string
 		/// </summary>
-		public void StartAllConversationsContaining(string pPartialName)
+		public string[] StartAllConversationsContaining(string pPartialName)
 		{
-			DoSomethingToAllConversationsContaining (pPartialName, StartIfNotStarted, "Started");
+			return DoSomethingToAllConversationsContaining (pPartialName, o => !ConversationIsRunning(o.conversation), o => o.Start(), "Started");
 		}
 
 		/// <summary>
 		/// Stop all conversations with a name containing some string
 		/// </summary>
-		public void StopAllConversationsContaining(string pPartialName)
+		public string[] StopAllConversationsContaining(string pPartialName)
 		{
-			DoSomethingToAllConversationsContaining (pPartialName, StopIfStarted, "Stopped");
+			return DoSomethingToAllConversationsContaining (pPartialName, o => ConversationIsRunning(o.conversation), o => o.Stop(), "Stopped");
 		}
 
-		private void DoSomethingToAllConversationsContaining(string pPartialName, Action<ConversationStartDialogueNode> pAction, string pDescription)
+		private string[] DoSomethingToAllConversationsContaining(string pPartialName, Predicate<DialogueNode> pPred, Action<ConversationStartDialogueNode> pAction, string pDescription)
 		{
-			var conversations = GetAllConversationsWithNameContaining (pPartialName);
+			var conversations = GetAllConversationsWithNameContaining (pPartialName, pPred);
 			conversations.ForEach (pAction);
-			logger.Log (pDescription + " " + conversations.Count + " conversations with partial name " + pPartialName);
+			var names = conversations.ConvertAll (o => o.conversation).ToArray ();
+			logger.Log (pDescription + " " + conversations.Count + " conversations with partial name " + pPartialName + ": " + string.Join(", ", names));
+			return names;
 		}
 
-		private List<ConversationStartDialogueNode> GetAllConversationsWithNameContaining(string pPartialName) 
+		private List<ConversationStartDialogueNode> GetAllConversationsWithNameContaining(string pPartialName, Predicate<DialogueNode> pPred) 
 		{
 			var foundNodes = new List<ConversationStartDialogueNode> ();
 			foreach (var node in _dialogueNodes) {
 				if (node is ConversationStartDialogueNode &&
-					node.name.Contains (pPartialName)) 
+					node.conversation.Contains (pPartialName) &&
+				    pPred(node)) 
 				{
 					foundNodes.Add (node as ConversationStartDialogueNode);
 				}
 			}
 			return foundNodes;
+		}
+
+		public string[] GetNamesOfAllStoppedConversationsWithNameContaining(string pPartialName)
+		{
+			return GetAllConversationsWithNameContaining(pPartialName, o => !ConversationIsRunning(o.conversation)).ConvertAll (o => o.conversation).ToArray();
 		}
 
 		public void StopConversation(string pConverstation)
