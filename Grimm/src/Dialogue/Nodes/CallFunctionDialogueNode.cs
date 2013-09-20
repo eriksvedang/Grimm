@@ -22,7 +22,7 @@ namespace GrimmLib
 				_dialogueRunner.CallFunction(function, args);
 			}
 			catch(Exception e) {
-				throw new GrimmException ("Error when calling function from node " + this.name + " in conversation '" + this.conversation + "': " + e.Message);
+				throw new GrimmException ("Error when calling function from node " + this.name + " in conversation '" + this.conversation + "': " + e.Message + " \nStack trace: " + e.StackTrace);
 			}
 			
 			StartNextNode();
