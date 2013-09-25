@@ -19,9 +19,11 @@ namespace GrimmLib
 			CELL_line = EnsureCell("line", "");
 		}
 
-		public void CalculateAndSetTimeBasedOnLineLength()
+		public void CalculateAndSetTimeBasedOnLineLength(bool isOptionNode)
 		{
-			timerStartValue = timer = 0.75f + line.Length * 0.05f;
+			float baseTime = isOptionNode ? 0.1f : 0.75f;
+			float timePerChar = isOptionNode ? 0.02f : 0.04f;			
+			timerStartValue = timer = baseTime + line.Length * timePerChar;
 		}
 		
 		public override void OnEnter()
