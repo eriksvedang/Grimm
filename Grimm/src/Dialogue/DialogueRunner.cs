@@ -396,7 +396,18 @@ namespace GrimmLib
 				}
 			}
 		}
-		
+
+		public bool IsWaitingOnEvent(string pEventName)
+		{
+			foreach(IRegisteredDialogueNode l in _registeredDialogueNodes)
+			{
+				if(l.isListening && l.eventName == pEventName) {
+					return true;
+				}
+			}
+			return false;
+		}
+
 		public void AddFocusConversationListener(OnFocusConversation pOnFocusConversation)
 		{
 			_onFocusConversation += pOnFocusConversation;
