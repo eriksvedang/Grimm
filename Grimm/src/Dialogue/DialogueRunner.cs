@@ -106,6 +106,27 @@ namespace GrimmLib
 			                                     ) as BranchingDialogueNode;
 			return n;
 		}
+		
+		private TimedDialogueNode GetActiveTimedDialogueNode(string pConversation)
+		{
+			TimedDialogueNode n = _dialogueNodes.Find(o => 
+			                                     (o.isOn) &&
+			                                     (o.language == _language) && 
+			                                     (o.conversation == pConversation) &&
+			                                     (o is TimedDialogueNode)
+			                                     ) as TimedDialogueNode;
+			return n;
+		}
+		
+		public void FastForwardCurrentTimedDialogueNode(string pConversation)
+		{
+			var activeTimedNode = GetActiveTimedDialogueNode(pConversation);
+			if(activeTimedNode == null) {
+				D.Log("Can't fast forward in " + pConversation + " since it's not on a timed dialogue node");
+			} else {
+				activeTimedNode.timer = 0.01f;
+			}
+		}
 
 		private void CheckThatThereIsOnlyOneActiveNodeInTheConversation(string pConversation)
 		{
