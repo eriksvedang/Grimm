@@ -76,20 +76,18 @@ namespace GrimmLib
 
         public void Update(float dt)
         {
-			/*
+			
 			_deltaTimeChunker += dt;
 
 			while (_deltaTimeChunker >= DT_CHUNK_SIZE) {
 				_deltaTimeChunker -= DT_CHUNK_SIZE;
 				Console.WriteLine("Updating dialogue runner");
 
-
-			}*/
-
-			foreach (DialogueNode d in _dialogueNodes)
-			{
-				if(d.isOn) {
-					d.Update(dt);
+				foreach (DialogueNode d in _dialogueNodes)
+				{
+					if(d.isOn) {
+						d.Update(DT_CHUNK_SIZE);
+					}
 				}
 			}
         }
