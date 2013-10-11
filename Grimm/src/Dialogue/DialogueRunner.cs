@@ -17,21 +17,28 @@ namespace GrimmLib
     {
 		public delegate void OnSomeoneSaidSomething(Speech pSpeech);
 		public delegate bool Expression(string[] args);
-		public delegate void Function(string[] args);
-		public delegate void OnFocusConversation(string pConversation);
-		public delegate void OnEvent(string pEventName);
-		
+		public delegate void Function (string[] args);
+
+		public delegate void OnFocusConversation (string pConversation);
+
+		public delegate void OnEvent (string pEventName);
+
 		public Logger logger = new Logger();
-		
 		private TableTwo _dialogueTable;
 		private Language _language;
-        private List<DialogueNode> _dialogueNodes;
+		private List<DialogueNode> _dialogueNodes;
+
 		private event OnSomeoneSaidSomething _onSomeoneSaidSomething;
+
 		private Dictionary<string, Expression> _expressions = new Dictionary<string, Expression>();
 		private Dictionary<string, Function> _functions = new Dictionary<string, Function>();
 		private List<IRegisteredDialogueNode> _registeredDialogueNodes = new List<IRegisteredDialogueNode>();
+
 		private event OnFocusConversation _onFocusConversation, _onDefocusConversation;
 		private event OnEvent _onEvent;
+
+		private float _deltaTimeChunker = 0.0f;
+		static float DT_CHUNK_SIZE = 0.5f; // seconds between updates
 		
         public DialogueRunner(RelayTwo pRelay, Language pLanguage)
         {
@@ -66,11 +73,21 @@ namespace GrimmLib
 			}
 			return newDialogueNode;
 		}
-		
+
         public void Update(float dt)
         {
-            foreach (DialogueNode d in _dialogueNodes)
-            {
+			/*
+			_deltaTimeChunker += dt;
+
+			while (_deltaTimeChunker >= DT_CHUNK_SIZE) {
+				_deltaTimeChunker -= DT_CHUNK_SIZE;
+				Console.WriteLine("Updating dialogue runner");
+
+
+			}*/
+
+			foreach (DialogueNode d in _dialogueNodes)
+			{
 				if(d.isOn) {
 					d.Update(dt);
 				}

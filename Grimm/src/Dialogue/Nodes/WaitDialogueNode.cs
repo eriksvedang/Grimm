@@ -122,15 +122,20 @@ namespace GrimmLib
 				CELL_eventName.data = value;
 			}
 		}
-		
+
+		private ExpressionDialogueNode[] _expressionCACHE;
+
 		public ExpressionDialogueNode[] expressions
 		{
 			get {
-				List<ExpressionDialogueNode> expressions = new List<ExpressionDialogueNode>();
-				foreach(string expressionName in CELL_expressions.data) {
-					expressions.Add(_dialogueRunner.GetDialogueNode(conversation, expressionName) as ExpressionDialogueNode);
+				if (_expressionCACHE == null) {
+					List<ExpressionDialogueNode> expressions = new List<ExpressionDialogueNode>();
+					foreach (string expressionName in CELL_expressions.data) {
+						expressions.Add(_dialogueRunner.GetDialogueNode(conversation, expressionName) as ExpressionDialogueNode);
+					}
+					_expressionCACHE = expressions.ToArray();
 				}
-				return expressions.ToArray();
+				return _expressionCACHE;
 			}
 			set {
 				List<string> expressionNames = new List<string>();
