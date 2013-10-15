@@ -76,7 +76,19 @@ namespace GrimmLib
 
         public void Update(float dt)
         {
-			
+			foreach (DialogueNode d in _dialogueNodes)
+			{
+				if(d.isOn) {
+					d.Update(dt);
+				}
+			}
+
+			// The following optimization had some problems (of course!)
+			// Like when getting into a focused dialogue the game would 
+			// get confused since the Dialogue runner wasn't updating every
+			// frame or something like that :(
+
+			/*
 			_deltaTimeChunker += dt;
 
 			while (_deltaTimeChunker >= DT_CHUNK_SIZE) {
@@ -89,7 +101,7 @@ namespace GrimmLib
 						d.Update(DT_CHUNK_SIZE);
 					}
 				}
-			}
+			}*/
         }
 		
 		public DialogueNode GetDialogueNode(string pConversation, string pName) 
