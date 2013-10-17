@@ -510,6 +510,17 @@ namespace GrimmLib
 			return string.Format("DialogueRunner ({0} dialogue nodes, {1} registered dialogue nodes)", _dialogueNodes.Count, _registeredDialogueNodes.Count);
 		}
 
+		public HashSet<string> GetActiveConversations()
+		{
+			var activeConversations = new HashSet<string>();
+			foreach (var node in _dialogueNodes) {
+				if (node.isOn) {
+					activeConversations.Add(node.conversation);
+				}
+			}
+			return activeConversations;
+		}
+
 		private void RegisterBuiltInAPIExpressions()
 		{
 			AddExpression("IsActive", IsActive);
