@@ -963,9 +963,13 @@ namespace GrimmLib
 					nameOfPossibleOptions.Add(n.name);
 				}
 			}
-			
+
 			bn.nextNodes = nameOfPossibleOptions.ToArray();
 			bn.eternal = eternal;
+
+			if (bn.nextNodes.Length < 2) {
+				Console.WriteLine("\nWarning! Branching node " + bn.name + " with only " + bn.nextNodes.Length + " nodes in " + _conversationName);
+			}
 			
 			match(Token.TokenType.BLOCK_END);
 			
