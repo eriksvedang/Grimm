@@ -52,6 +52,14 @@ namespace GrimmLib
 				if(n is IRegisteredDialogueNode) {
 					IRegisteredDialogueNode ir = n as IRegisteredDialogueNode;
 					_registeredDialogueNodes.Add(ir);
+					/*
+					if(ir.isListening) {
+						
+					}
+					else {
+						Console.WriteLine("Not adding node " + ir.name + " in conversation " + ir.conversation);
+					}
+					*/
 				}
 			}
 			RegisterBuiltInAPIExpressions();
@@ -118,6 +126,11 @@ namespace GrimmLib
 					throw new GrimmException("Can't find DialogueNode with name '" + pName + "' in conversation '" + pConversation + "'");
 				}
 			}
+		}
+		
+		public List<IRegisteredDialogueNode> GetRegisteredDialogueNodes()
+		{
+			return _registeredDialogueNodes;
 		}
 
 		/// <returns>
@@ -254,10 +267,9 @@ namespace GrimmLib
 				if(n.isOn && n.conversation == pConverstation) {
 					n.Stop();
 				}
-			}
-			foreach(IRegisteredDialogueNode i in _registeredDialogueNodes.ToArray()) {
-				if(i.conversation == pConverstation) {
-					_registeredDialogueNodes.Remove(i);
+				var r = n as IRegisteredDialogueNode;
+				if(r != null && n.conversation == pConverstation) {
+					r.isListening = false;
 				}
 			}
 		}
@@ -507,6 +519,15 @@ namespace GrimmLib
 			set {
 				_language = value;
 			}
+		}
+		
+		private string RegisteredNodesAsString() {
+			var registeredNodes = GetRegisteredDialogueNodes();
+			var registeredNodeNames = new List<string>();
+			foreach(var node in registeredNodes) {
+				registeredNodeNames.Add("[" + node.name + " in '" + node.conversation + "' " + (node.isListening ? "LISTENING" : "NOT listening") + "]");
+			}
+			return "Registered nodes: " + string.Join(", ", registeredNodeNames.ToArray());
 		}
 		
 		public override string ToString()
