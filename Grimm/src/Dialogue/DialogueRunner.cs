@@ -535,12 +535,12 @@ namespace GrimmLib
 			return string.Format("DialogueRunner ({0} dialogue nodes, {1} registered dialogue nodes)", _dialogueNodes.Count, _registeredDialogueNodes.Count);
 		}
 
-		public string GetAllProseAsString()
+		public string GetAllDialogueAsString()
 		{
 			var sb = new StringBuilder();
 			foreach (var node in _dialogueNodes) {
 				if (node is TimedDialogueNode) {
-					sb.AppendLine((node as TimedDialogueNode).line);
+					sb.Append((node as TimedDialogueNode).line + " ");
 				}
 			}
 			return sb.ToString();
