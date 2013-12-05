@@ -541,6 +541,9 @@ namespace GrimmLib
 			foreach (var node in _dialogueNodes) {
 				if (node is TimedDialogueNode) {
 					sb.Append((node as TimedDialogueNode).line + " ");
+					if (Randomizer.OneIn(10)) {
+						sb.AppendLine("");
+					}
 				}
 			}
 			return sb.ToString();
