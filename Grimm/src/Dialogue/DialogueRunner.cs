@@ -415,7 +415,7 @@ namespace GrimmLib
 		
 		public void EventHappened(string pEventName)
 		{
-			logger.Log("Event [" + pEventName + "]");
+			//logger.Log("Event [" + pEventName + "]");
 			foreach(IRegisteredDialogueNode listeningNode in _registeredDialogueNodes.ToArray())
 			{
 				if(listeningNode.isListening && listeningNode.eventName == pEventName) {

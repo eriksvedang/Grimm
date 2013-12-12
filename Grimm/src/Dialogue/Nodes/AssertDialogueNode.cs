@@ -8,7 +8,8 @@ namespace GrimmLib
 		{
 			Stop();
 			if(_dialogueRunner.EvaluateExpression(expression, args) == false) {
-				throw new GrimmAssertException("Expression " + expression + " failed in conversation '" + conversation + "'");
+				var argsConcatenated = string.Join(", ", args);
+				throw new GrimmAssertException("Assertion " + expression + "(" + argsConcatenated + ") failed in conversation '" + conversation + "'");
 			}
 			StartNextNode();
 		}
