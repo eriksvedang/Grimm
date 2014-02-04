@@ -512,7 +512,8 @@ namespace GrimmLib
 				EventHappened("Defocused_" + pConversation);
 			}
 			else {
-				throw new GrimmException("Trying to defocus conversation " + pConversation + " but there is no onDefocusConversation listener.");
+				//throw new GrimmException("Trying to defocus conversation " + pConversation + " but there is no onDefocusConversation listener.");
+				D.Log("Trying to defocus conversation " + pConversation + " but there is no onDefocusConversation listener.");
 			}
 		}
 		
