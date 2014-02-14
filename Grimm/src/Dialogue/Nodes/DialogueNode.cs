@@ -18,7 +18,7 @@ namespace GrimmLib
         ValueEntry<string> CELL_nextNode;
 		ValueEntry<string> CELL_scopeNode;
 
-		//bool _isOnCache;
+		bool _isOnCache;
 		
 		public void SetRunner(DialogueRunner pRunner)
 		{
@@ -38,7 +38,7 @@ namespace GrimmLib
             CELL_language = EnsureCell("language", Language.SWEDISH);
 			CELL_scopeNode = EnsureCell("scopeNode", "");
 
-			//_isOnCache = CELL_isOn.data;
+			_isOnCache = CELL_isOn.data;
 		}
 		
 		public void Start() {
@@ -81,13 +81,13 @@ namespace GrimmLib
 		public bool isOn {
 			get 
             {
-				//return _isOnCache;
-				return CELL_isOn.data;
+				return _isOnCache;
+				//return CELL_isOn.data;
 			}
             private set 
             { 
-                CELL_isOn.data = value;
-				//_isOnCache = value;
+				_isOnCache = value;
+               	CELL_isOn.data = value;
             }
 		}
 		
