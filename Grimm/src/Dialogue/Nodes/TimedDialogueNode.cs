@@ -21,8 +21,8 @@ namespace GrimmLib
 
 		public void CalculateAndSetTimeBasedOnLineLength(bool isOptionNode)
 		{
-			float baseTime = isOptionNode ? 0.8f : 1.0f;
-			float timePerChar = isOptionNode ? 0.03f : 0.04f;			
+			float baseTime = isOptionNode ? 0.6f : 0.8f;
+			float timePerChar = isOptionNode ? 0.01f : 0.02f;			
 			timerStartValue = timer = baseTime + line.Length * timePerChar;
 		}
 		
