@@ -1,0 +1,2 @@
+
+LISTEN Foo WAIT IsHour(20)

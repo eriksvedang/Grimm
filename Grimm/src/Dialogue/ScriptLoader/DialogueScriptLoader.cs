@@ -363,11 +363,16 @@ namespace GrimmLib
 			string eventName = GetAStringFromNextToken(false, false);
 			
 			string handleName = "";
-			if(lookAheadType(1) == Token.TokenType.BRACKET_LEFT) {
-				match(Token.TokenType.BRACKET_LEFT);
-				Token handleToken = match(Token.TokenType.NAME);
-				handleName = handleToken.getTokenString();
-				match(Token.TokenType.BRACKET_RIGHT);
+			if (lookAheadType (1) == Token.TokenType.BRACKET_LEFT) {
+				match (Token.TokenType.BRACKET_LEFT);
+				Token handleToken = match (Token.TokenType.NAME);
+				handleName = handleToken.getTokenString ();
+				match (Token.TokenType.BRACKET_RIGHT);
+			} else if (
+				(lookAheadType (1) != Token.TokenType.EOF) &&
+				(lookAheadType (1) != Token.TokenType.NEW_LINE) &&
+				(lookAheadType (1) != Token.TokenType.BLOCK_BEGIN)) {
+				throw new GrimmException ("Can't follow LISTEN statement with token of type " + lookAheadType (1) + " at line " + lookAhead(1).LineNr + " and position " + lookAhead(1).LinePosition + " in " + _conversationName);
 			}
 						
 			ListeningDialogueNode n = _dialogueRunner.Create<ListeningDialogueNode>(_conversationName, _language, (_nodeCounter++).ToString() + "(event listener)");

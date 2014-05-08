@@ -212,7 +212,63 @@ namespace GrimmLib.tests
 			Assert.AreEqual(2, _lines.Count);
 			Assert.AreEqual("Howdy", _lines[0]);
 			Assert.AreEqual("", _lines[1]); // = the "shut up message"
-		}		
+		}	
+
+		[Test()]
+		public void DontTriggerEventOnWaitingNodeUnlessEventHappensWhenExpressionIsTrue()
+		{
+			RelayTwo relay = new RelayTwo();
+			relay.CreateTable(DialogueNode.TABLE_NAME);
+			DialogueRunner runner = new DialogueRunner(relay, Language.SWEDISH);
+
+			runner.logger.AddListener (msg => Console.WriteLine ("Dialog runner log: " + msg));
+
+			bool sunny = false;
+
+			runner.AddExpression ("IsSunny", new DialogueRunner.Expression (args => {
+				return sunny;
+			}));
+
+			var expression = runner.Create<ExpressionDialogueNode>("Conversation1", Language.SWEDISH, "ExpressionNode");
+			expression.expression = "IsSunny";
+			expression.args = new string[] { };
+
+			var waitNode = runner.Create<WaitDialogueNode>("Conversation1", Language.SWEDISH, "WaitNode");
+			waitNode.eventName = "bam!";
+			waitNode.expressions = new ExpressionDialogueNode[] {
+				expression
+			};
+
+			var start = runner.Create<ConversationStartDialogueNode>("Conversation1", Language.SWEDISH, "Start");
+			var end = runner.Create<ConversationEndDialogueNode>("Conversation1", Language.SWEDISH, "End");
+
+			start.nextNode = waitNode.name;
+			waitNode.nextNode = end.name;
+
+			runner.StartConversation ("Conversation1");
+			runner.Update (0.1f);
+			Assert.IsTrue (waitNode.isOn);
+			Assert.IsTrue (runner.ConversationIsRunning("Conversation1"));
+
+			// Event should not occur since it's not sunny yet
+			runner.EventHappened("bam!");
+			runner.Update (0.1f);
+			Assert.IsTrue (waitNode.isOn);
+			Assert.IsTrue (runner.ConversationIsRunning("Conversation1"));
+
+			sunny = true;
+
+			// Now, even though it's sunny the event should still not happen since we're not bam!:ing
+			runner.Update (0.1f);
+			Assert.IsTrue (waitNode.isOn);
+			Assert.IsTrue (runner.ConversationIsRunning("Conversation1"));
+
+			// But if the bam! event happens while sunny, the conversation should end
+			runner.EventHappened("bam!");
+			runner.Update (0.1f);
+			Assert.IsFalse (waitNode.isOn);
+			Assert.IsFalse (runner.ConversationIsRunning("Conversation1"));
+		}
 	}
 }
 

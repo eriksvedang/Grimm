@@ -1196,6 +1196,24 @@ namespace GrimmLib.tests
 		}
 
 		[Test()]
+		public void WaitMustComeBeforeListen()
+		{
+			RelayTwo relay = new RelayTwo();
+			relay.CreateTable(DialogueNode.TABLE_NAME);
+
+			DialogueRunner dialogueRunner = new DialogueRunner(relay, Language.DEFAULT);
+			dialogueRunner.logger.AddListener(Console.WriteLine);
+
+			DialogueScriptLoader scriptLoader = new DialogueScriptLoader(dialogueRunner);
+
+			Assert.Throws<GrimmException> (
+				() => {
+					scriptLoader.LoadDialogueNodesFromFile ("../conversations/conversation38.dia");
+				}
+			);
+		}
+
+		[Test()]
 		public void WaitSpecifiedTime()
 		{
 			_lines = new List<string>();
