@@ -888,6 +888,7 @@ namespace GrimmLib
 				#endif
 				
 				match(Token.TokenType.BLOCK_END);
+				AllowLineBreak();
 			}
 			
 			if(lookAheadType(1) == Token.TokenType.ELSE) {
