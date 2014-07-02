@@ -237,7 +237,9 @@ namespace GrimmLib
 			var conversations = GetAllConversationsWithNameContaining (pPartialName, pPred);
 			conversations.ForEach (pAction);
 			var names = conversations.ConvertAll (o => o.conversation).ToArray ();
-			logger.Log (pDescription + " " + conversations.Count + " conversations with partial name " + pPartialName + ": " + string.Join(", ", names));
+			if (conversations.Count > 0) {
+				logger.Log (pDescription + " " + conversations.Count + " conversations with partial name " + pPartialName + ": " + string.Join (", ", names));
+			}
 			return names;
 		}
 
