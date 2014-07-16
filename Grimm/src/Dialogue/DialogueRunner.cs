@@ -354,7 +354,9 @@ namespace GrimmLib
 		{
 #if DEBUG
 			if(!_expressions.ContainsKey(pExpressionName)) {
-				throw new GrimmException("Can't find expression '" + pExpressionName + "' in Dialogue Runner");
+				string msg = "Can't find expression '" + pExpressionName + "' in Dialogue Runner";
+				D.Log("ERROR: " + msg);
+				//throw new GrimmException(msg);
 			}
 #endif
 			//Console.WriteLine(System.Environment.StackTrace.ToString());
