@@ -1,5 +1,7 @@
 using System;
 using RelayLib;
+using GameTypes;
+
 namespace GrimmLib
 {
 	public class CallFunctionDialogueNode : DialogueNode
@@ -22,7 +24,9 @@ namespace GrimmLib
 				_dialogueRunner.CallFunction(function, args);
 			}
 			catch(Exception e) {
-				throw new GrimmException ("Error when calling function from node " + this.name + " in conversation '" + this.conversation + "': " + e.Message + " \nStack trace: " + e.StackTrace);
+				string msg = "Error when calling function from node " + this.name + " in conversation '" + this.conversation + "': " + e.Message + " \nStack trace: " + e.StackTrace;
+				D.Log(msg);
+				//throw new GrimmException (msg);
 			}
 			
 			StartNextNode();

@@ -87,7 +87,12 @@ namespace GrimmLib
 			foreach (DialogueNode d in _dialogueNodes)
 			{
 				if(d.isOn) {
-					d.Update(dt);
+					try {
+						d.Update(dt);
+					}
+					catch(Exception e) {
+						D.Log ("EXCEPTION in dialogue node " + d.name + ": " + e.ToString ());
+					}
 				}
 			}
 
@@ -111,6 +116,16 @@ namespace GrimmLib
 				}
 			}*/
         }
+
+		/*void TryStartingNextNode (DialogueNode pNode)
+		{
+			if (pNode.nextNode != null) {
+				var nextNode = GetDialogueNode (pNode.conversation, pNode.nextNode);
+				if (nextNode != null) {
+					nextNode.Start ();
+				}
+			}
+		}*/
 		
 		public DialogueNode GetDialogueNode(string pConversation, string pName) 
 		{
@@ -376,13 +391,14 @@ namespace GrimmLib
 
 		public void CallFunction(string pFunctionName, string[] args)
 		{
-#if DEBUG
-			if(!_functions.ContainsKey(pFunctionName)) {
-				throw new GrimmException("Can't find function '" + pFunctionName + "' in Dialogue Runner");
+			if (_functions.ContainsKey (pFunctionName)) {
+				Function f = _functions [pFunctionName];
+				f (args);
+			} else {
+				string msg = "Can't find function '" + pFunctionName + "' in Dialogue Runner";
+				D.Log ("ERROR! " + msg);
+				//throw new GrimmException(msg);
 			}
-#endif
-			Function f = _functions[pFunctionName];
-			f(args);
 		}
 			
 		public string GetFunctionsAsString()
