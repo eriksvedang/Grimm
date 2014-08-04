@@ -282,7 +282,7 @@ namespace GrimmLib
 			Token lineToken = match(Token.TokenType.QUOTED_STRING);
 			string line = lineToken.getTokenString();
 			
-			TimedDialogueNode n = _dialogueRunner.Create<TimedDialogueNode>(_conversationName, _language, (_nodeCounter++).ToString()); // + " (" + line + ")");
+			TimedDialogueNode n = _dialogueRunner.Create<TimedDialogueNode>(_conversationName, _language, (_nodeCounter++).ToString() + "_line_" + lineToken.LineNr); // + " (" + line + ")");
 			n.speaker = speaker;
 			n.line = line;
 			n.CalculateAndSetTimeBasedOnLineLength(false);
@@ -416,7 +416,7 @@ namespace GrimmLib
 			
 			string[] args = VisitFunctionCall(out functionName);
 			
-			CallFunctionDialogueNode n = _dialogueRunner.Create<CallFunctionDialogueNode>(_conversationName, _language, (_nodeCounter++).ToString());
+			CallFunctionDialogueNode n = _dialogueRunner.Create<CallFunctionDialogueNode>(_conversationName, _language, (_nodeCounter++).ToString() + "_" + functionName);
 			n.function = functionName;
 			n.args = args;
 			
