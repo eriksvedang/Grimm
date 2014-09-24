@@ -39,6 +39,8 @@ namespace GrimmLib
 
 		private float _deltaTimeChunker = 0.0f;
 		static float DT_CHUNK_SIZE = 0.5f; // seconds between updates
+
+		public Action<string> onGrimmError;
 		
         public DialogueRunner(RelayTwo pRelay, Language pLanguage)
         {
@@ -91,7 +93,11 @@ namespace GrimmLib
 						d.Update(dt);
 					}
 					catch(Exception e) {
-						D.Log ("EXCEPTION in dialogue node " + d.name + ": " + e.ToString ());
+						string description = d.name + ": " + e.ToString ();
+						D.Log ("GRIMM_ERROR: " + description);
+						if (onGrimmError != null) {
+							onGrimmError (description);
+						}
 					}
 				}
 			}
