@@ -362,6 +362,11 @@ namespace GrimmLib
 			if(!_expressions.ContainsKey(pExpressionName)) {
 				string msg = "Can't find expression '" + pExpressionName + "' in Dialogue Runner";
 				D.Log("ERROR: " + msg);
+
+				if (onGrimmError != null) {
+					onGrimmError (msg);
+				}
+
 				//throw new GrimmException(msg);
 			}
 #endif
@@ -406,6 +411,10 @@ namespace GrimmLib
 				string msg = "Can't find function '" + pFunctionName + "' in Dialogue Runner";
 				D.Log ("ERROR! " + msg);
 				//throw new GrimmException(msg);
+
+				if (onGrimmError != null) {
+					onGrimmError (msg);
+				}
 			}
 		}
 			

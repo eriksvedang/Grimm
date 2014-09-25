@@ -26,6 +26,10 @@ namespace GrimmLib
 			catch(Exception e) {
 				string msg = "Error when calling function from node " + this.name + " in conversation '" + this.conversation + "': " + e.Message + " \nStack trace: " + e.StackTrace;
 				D.Log(msg);
+
+				if (_dialogueRunner.onGrimmError != null) {
+					_dialogueRunner.onGrimmError (msg);
+				}
 				//throw new GrimmException (msg);
 			}
 			
