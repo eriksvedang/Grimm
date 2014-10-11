@@ -37,9 +37,6 @@ namespace GrimmLib
 		private event OnFocusConversation _onFocusConversation, _onDefocusConversation;
 		private event OnEvent _onEvent;
 
-		private float _deltaTimeChunker = 0.0f;
-		static float DT_CHUNK_SIZE = 0.5f; // seconds between updates
-
 		public Action<string> onGrimmError;
 		
         public DialogueRunner(RelayTwo pRelay, Language pLanguage)
@@ -101,37 +98,7 @@ namespace GrimmLib
 					}
 				}
 			}
-
-			// The following optimization had some problems (of course!)
-			// Like when getting into a focused dialogue the game would 
-			// get confused since the Dialogue runner wasn't updating every
-			// frame or something like that :(
-
-			/*
-			_deltaTimeChunker += dt;
-
-			while (_deltaTimeChunker >= DT_CHUNK_SIZE) {
-				_deltaTimeChunker -= DT_CHUNK_SIZE;
-				Console.WriteLine("Updating dialogue runner");
-
-				foreach (DialogueNode d in _dialogueNodes)
-				{
-					if(d.isOn) {
-						d.Update(DT_CHUNK_SIZE);
-					}
-				}
-			}*/
         }
-
-		/*void TryStartingNextNode (DialogueNode pNode)
-		{
-			if (pNode.nextNode != null) {
-				var nextNode = GetDialogueNode (pNode.conversation, pNode.nextNode);
-				if (nextNode != null) {
-					nextNode.Start ();
-				}
-			}
-		}*/
 		
 		public DialogueNode GetDialogueNode(string pConversation, string pName) 
 		{
@@ -465,7 +432,7 @@ namespace GrimmLib
 		
 		public void ConversationEnded(string pConversation)
 		{
-			logger.Log("Conversation '" + pConversation + "' ended");
+			//logger.Log("Conversation '" + pConversation + "' ended");
 			foreach(IRegisteredDialogueNode l in _registeredDialogueNodes)
 			{
 				if(l.conversation == pConversation) {
