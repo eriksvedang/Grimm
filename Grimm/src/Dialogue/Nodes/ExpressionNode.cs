@@ -45,7 +45,7 @@ namespace GrimmLib
 				return _dialogueRunner.EvaluateExpression(expression, args);
 			}
 			catch(Exception e) {
-				throw new GrimmException("Error when evaluating expression " + expression + " in " + conversation + " with args: " + string.Join(", ", args) + " e: " + e.Message);
+				throw new GrimmException("Error when evaluating expression " + expression + " in " + conversation + " with args: " + string.Join(", ", args) + " e: " + e.Message + " stack: " + e.StackTrace);
 			}
 		}
 	}
