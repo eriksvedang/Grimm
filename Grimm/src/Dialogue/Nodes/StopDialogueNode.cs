@@ -16,6 +16,7 @@ namespace GrimmLib
 		public override void OnEnter()
 		{
 			Stop();
+			_dialogueRunner.DefocusConversation (conversationToStop);
 			_dialogueRunner.StopConversation(conversationToStop);
 			if(conversationToStop != conversation) {
 				// if the stopped conversation is another conversation we just go on to the next node
