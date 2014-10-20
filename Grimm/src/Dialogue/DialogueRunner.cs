@@ -151,8 +151,8 @@ namespace GrimmLib
 			var activeTimedNode = GetActiveTimedDialogueNode(pConversation);
 
 			if (activeTimedNode == null) {
-				D.Log("Can't fast forward in " + pConversation + " since it's not on a timed dialogue node");
-			} else if((activeTimedNode.timerStartValue - activeTimedNode.timer) < 0.25f) { // < (activeTimedNode.timerStartValue * 0.5f)) {
+				//D.Log("Can't fast forward in " + pConversation + " since it's not on a timed dialogue node");
+			} else if((activeTimedNode.timerStartValue - activeTimedNode.timer) < 0.5f) { // < (activeTimedNode.timerStartValue * 0.5f)) {
 				D.Log("Will not fast forward in " + pConversation + " since it just switched to a new node");
 			} else {
 				activeTimedNode.timer = 0.01f;
