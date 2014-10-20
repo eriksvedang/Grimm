@@ -861,6 +861,36 @@ namespace GrimmLib.tests
 			Assert.AreEqual("Oh no!", _lines[0]);
 			Assert.AreEqual("", _lines[1]);
 		}
+
+		[Test()]
+		public void CancelNested()
+		{
+			_lines = new List<string>();
+
+			RelayTwo relay = new RelayTwo();
+			relay.CreateTable(DialogueNode.TABLE_NAME);
+
+			DialogueRunner dialogueRunner = new DialogueRunner(relay, Language.DEFAULT);
+			dialogueRunner.AddOnSomeoneSaidSomethingListener(OnSomeoneSaidSomething);
+			dialogueRunner.logger.AddListener(LogDialogueRunner);
+
+			DialogueScriptLoader scriptLoader = new DialogueScriptLoader(dialogueRunner);
+			scriptLoader.LoadDialogueNodesFromFile("../conversations/conversation22b.dia");
+
+			DialogueScriptPrinter scriptPrinter = new DialogueScriptPrinter(dialogueRunner);
+			scriptPrinter.PrintConversation("conversation22b");
+
+			dialogueRunner.StartConversation("conversation22b");
+
+			for(int i = 0; i < 500; i++)
+			{
+				dialogueRunner.Update(1.0f);
+			}
+
+			Assert.AreEqual(2, _lines.Count);
+			Assert.AreEqual("Yup", _lines[0]);
+			Assert.AreEqual("", _lines[1]);
+		}
 		
 		[Test()]
 		public void Focus()

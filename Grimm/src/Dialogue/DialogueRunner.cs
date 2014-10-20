@@ -444,21 +444,40 @@ namespace GrimmLib
 		public void ScopeEnded(string pConversation, string pScopeNode)
 		{
 			logger.Log("Scope '" + pScopeNode + "' for conversation '" + pConversation + "' ended");
-			foreach(ListeningDialogueNode l in _registeredDialogueNodes)
+			foreach(IRegisteredDialogueNode registeredNode in _registeredDialogueNodes)
 			{
-				if(l.conversation == pConversation && l.scopeNode == pScopeNode) {
-					l.isListening = false;
+				if(registeredNode.conversation == pConversation) {
+					if (registeredNode.ScopeNode() == pScopeNode) {
+						if (registeredNode.isListening) {
+							logger.Log ("Stop listening: " + registeredNode.name + ": " + registeredNode.eventName);
+							registeredNode.isListening = false;
+						} else {
+							logger.Log ("Not listening: " + registeredNode.name + ": " + registeredNode.eventName);
+						}
+					} else {
+						logger.Log ("Not same scope: " + registeredNode.name + "; it has scope node '" + registeredNode.ScopeNode() + "'");
+					}
 				}
 			}
 		}
 		
 		public void CancelRegisteredNode(string pConversation, string pListenerHandle)
 		{
-			foreach(IRegisteredDialogueNode l in _registeredDialogueNodes)
+			foreach(IRegisteredDialogueNode registeredNode in _registeredDialogueNodes)
 			{
-				if(l.conversation == pConversation && l.handle == pListenerHandle) {
-					logger.Log("Cancelled node " + l.name);
-					l.isListening = false;
+				if(registeredNode.conversation == pConversation && registeredNode.handle == pListenerHandle) {
+					logger.Log("Cancelled node " + registeredNode.name + " in conversation " + pConversation);
+					registeredNode.isListening = false;
+					if (registeredNode is ListeningDialogueNode) {
+						logger.Log ("Also end scope for listening node " + registeredNode.name);
+						var listeningNode = (registeredNode as ListeningDialogueNode);
+						ScopeEnded (pConversation, listeningNode.name);
+					}
+					else if (registeredNode is WaitDialogueNode) {
+						logger.Log ("Also end scope for wait node " + registeredNode.name);
+						var waitingNode = (registeredNode as WaitDialogueNode);
+						ScopeEnded (pConversation, waitingNode.name);
+					}
 				}
 			}
 		}

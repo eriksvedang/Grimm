@@ -10,5 +10,6 @@ namespace GrimmLib
 		bool isListening { get; set; }
 		string eventName { get; set; }
 		void EventHappened();
+		string ScopeNode();
 	}
 }

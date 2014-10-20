@@ -383,18 +383,21 @@ namespace GrimmLib
 				// Add this listening dialogue node to the scope of the loop so that it is automatically removed as a listener when the loop ends
 				n.scopeNode = _loopStack.Peek().name;
 			}
-			
-			SilentDialogueNode silentNode = _dialogueRunner.Create<SilentDialogueNode>(_conversationName, _language, (_nodeCounter++).ToString() + "(silent stop node)");
+				SilentDialogueNode silentNode = _dialogueRunner.Create<SilentDialogueNode>(_conversationName, _language, (_nodeCounter++).ToString() + "(silent stop node)");
 			
 			AllowLineBreak();
 			
 			if(lookAheadType(1) == Token.TokenType.BLOCK_BEGIN) {
+				_loopStack.Push(n);
+
 				ImmediateNode eventBranchStartNode = _dialogueRunner.Create<ImmediateNode>(_conversationName, _language, (_nodeCounter++).ToString() + "(eventBranchStartNode)");
 				n.branchNode = eventBranchStartNode.name;
 				n.hasBranch = true;
 				match(Token.TokenType.BLOCK_BEGIN);
 				Nodes(eventBranchStartNode, silentNode);
 				match(Token.TokenType.BLOCK_END);
+
+				_loopStack.Pop ();
 			}
 			else {
 				#if DEBUG_WRITE
@@ -696,12 +699,16 @@ namespace GrimmLib
 			AllowLineBreak();
 			
 			if(lookAheadType(1) == Token.TokenType.BLOCK_BEGIN) {
+				_loopStack.Push(n);
+
 				ImmediateNode eventBranchStartNode = _dialogueRunner.Create<ImmediateNode>(_conversationName, _language, (_nodeCounter++).ToString() + "(waitBranchStartNode)");
 				n.branchNode = eventBranchStartNode.name;
 				n.hasBranch = true;
 				match(Token.TokenType.BLOCK_BEGIN);
 				Nodes(eventBranchStartNode, silentEndNode);
 				match(Token.TokenType.BLOCK_END);
+
+				_loopStack.Pop ();
 			}
 			else {
 				#if DEBUG_WRITE

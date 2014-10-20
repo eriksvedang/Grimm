@@ -1,0 +1,20 @@
+
+
+LISTEN BetterTimes [A] {
+    Someone "Yup"
+    LISTEN Dope {
+        Someone "Do not say this"
+    }
+}
+
+
+BROADCAST BetterTimes
+
+WAIT 10 # let dope register
+
+CANCEL A # should cancel both
+
+WAIT 1
+
+BROADCAST Dope
+

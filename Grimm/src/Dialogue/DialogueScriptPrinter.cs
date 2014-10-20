@@ -242,7 +242,7 @@ namespace GrimmLib
 		private void PrintListeningDialogueNode(ListeningDialogueNode pListeningNode)
 		{
 			Indentation();
-			_output.Append("LISTEN_FOR " + pListeningNode.eventName + " " + pListeningNode.handle + " {\n");
+			_output.Append("LISTEN_FOR " + pListeningNode.eventName + " (scope: " + pListeningNode.scopeNode + ")" + pListeningNode.handle + " {\n");
 			
 			if(pListeningNode.hasBranch) {
 				_indentationLevel++;

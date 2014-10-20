@@ -12,6 +12,10 @@ namespace GrimmLib
 		ValueEntry<bool> CELL_isListening;
 		ValueEntry<string[]> CELL_expressions;
 		ValueEntry<string> CELL_eventName;
+
+		public string ScopeNode() {
+			return scopeNode;
+		}
 		
 		protected override void SetupCells()
 		{

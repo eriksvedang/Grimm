@@ -15,7 +15,11 @@ namespace GrimmLib
 		ValueEntry<string> CELL_branchNode;
         ValueEntry<bool> CELL_hasBranch;
         ValueEntry<string> CELL_handle;
-		
+
+		public string ScopeNode() {
+			return scopeNode;
+		}
+
 		protected override void SetupCells()
 		{
 			base.SetupCells ();
