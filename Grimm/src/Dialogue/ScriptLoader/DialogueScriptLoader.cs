@@ -286,7 +286,7 @@ namespace GrimmLib
 			n.speaker = speaker;
 			n.line = line;
 			n.CalculateAndSetTimeBasedOnLineLength(false);
-			
+						
 			if(lookAheadType(1) == Token.TokenType.BRACKET_LEFT) {
 				match(Token.TokenType.BRACKET_LEFT);
 				string nodeCustomName = match(Token.TokenType.NAME).getTokenString();

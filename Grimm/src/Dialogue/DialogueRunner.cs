@@ -451,11 +451,12 @@ namespace GrimmLib
 						if (registeredNode.isListening) {
 							logger.Log ("Stop listening: " + registeredNode.name + ": " + registeredNode.eventName);
 							registeredNode.isListening = false;
-						} else {
+						}
+						else {
 							logger.Log ("Not listening: " + registeredNode.name + ": " + registeredNode.eventName);
 						}
 					} else {
-						logger.Log ("Not same scope: " + registeredNode.name + "; it has scope node '" + registeredNode.ScopeNode() + "'");
+						//logger.Log ("Not same scope: " + registeredNode.name + "; it has scope node '" + registeredNode.ScopeNode() + "'");
 					}
 				}
 			}
