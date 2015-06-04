@@ -1,5 +1,6 @@
 using System;
 using RelayLib;
+using GameTypes;
 
 namespace GrimmLib
 {
@@ -21,9 +22,13 @@ namespace GrimmLib
 		public override void Update(float dt)
 		{
 			if(!_dialogueRunner.ConversationIsRunning(interruptingConversation)) {
+				//D.Log("Detected that interrupting conversation " + interruptingConversation + " has stopped, will continue in " + base.conversation);
 				Stop();
 				StartNextNode();
 			}
+//			else {
+//				D.Log("Interrupting conversation " + interruptingConversation + " is still going on...");
+//			}
 		}
 		
 		#region ACCESSORS
