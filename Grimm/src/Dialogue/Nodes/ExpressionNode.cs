@@ -1,5 +1,6 @@
 using System;
 using RelayLib;
+using GameTypes;
 
 namespace GrimmLib
 {
@@ -45,7 +46,10 @@ namespace GrimmLib
 				return _dialogueRunner.EvaluateExpression(expression, args);
 			}
 			catch(Exception e) {
-				throw new GrimmException("Error when evaluating expression " + expression + " in " + conversation + " with args: " + string.Join(", ", args) + " e: " + e.Message + " stack: " + e.StackTrace);
+				var msg = "Error when evaluating expression " + expression + " in " + conversation + " with args: " + string.Join(", ", args) + " e: " + e.Message + " stack: " + e.StackTrace;
+				D.Log(msg);
+				return false;
+				//throw new GrimmException(msg);
 			}
 		}
 	}
