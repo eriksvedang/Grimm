@@ -115,6 +115,10 @@ namespace GrimmLib
 				}
 			}
 		}
+
+		public List<DialogueNode> GetAllNodes() {
+			return _dialogueNodes;
+		}
 		
 		public List<IRegisteredDialogueNode> GetRegisteredDialogueNodes()
 		{
@@ -250,16 +254,20 @@ namespace GrimmLib
 			return GetAllConversationsWithNameContaining(pPartialName, o => !ConversationIsRunning(o.conversation)).ConvertAll (o => o.conversation).ToArray();
 		}
 
-		public void StopConversation(string pConverstation)
+		public void StopConversation(string pConversation)
 		{
-			logger.Log("Stopping conversation '" + pConverstation + "'");
+			logger.Log("Stopping conversation '" + pConversation + "'");
+
 			foreach(DialogueNode n in _dialogueNodes) {
-				if(n.isOn && n.conversation == pConverstation) {
+				if(n.isOn && n.conversation == pConversation) {
+					//D.Log("Stopping node " + n);
 					n.Stop();
 				}
 				var r = n as IRegisteredDialogueNode;
-				if(r != null && n.conversation == pConverstation) {
+				if(r != null && n.conversation == pConversation) {
+					//D.Log("Stopping listening node " + n);
 					r.isListening = false;
+					n.Stop(); // <-- THIS IS NEW, MAKE SURE IT DOESN'T CAUSE TROUBLE! Trying to get conversations to stop ALL nodes.
 				}
 			}
 		}
@@ -430,16 +438,16 @@ namespace GrimmLib
 			}
 		}
 		
-		public void ConversationEnded(string pConversation)
-		{
-			//logger.Log("Conversation '" + pConversation + "' ended");
-			foreach(IRegisteredDialogueNode l in _registeredDialogueNodes)
-			{
-				if(l.conversation == pConversation) {
-					l.isListening = false;
-				}
-			}
-		}
+//		public void ConversationEnded(string pConversation)
+//		{
+//			//logger.Log("Conversation '" + pConversation + "' ended");
+//			foreach(IRegisteredDialogueNode l in _registeredDialogueNodes)
+//			{
+//				if(l.conversation == pConversation) {
+//					l.isListening = false;
+//				}
+//			}
+//		}
 		
 		public void ScopeEnded(string pConversation, string pScopeNode)
 		{
@@ -449,11 +457,11 @@ namespace GrimmLib
 				if(registeredNode.conversation == pConversation) {
 					if (registeredNode.ScopeNode() == pScopeNode) {
 						if (registeredNode.isListening) {
-							logger.Log ("Stop listening: " + registeredNode.name + ": " + registeredNode.eventName);
+							//logger.Log ("Stop listening: " + registeredNode.name + ": " + registeredNode.eventName);
 							registeredNode.isListening = false;
 						}
 						else {
-							logger.Log ("Not listening: " + registeredNode.name + ": " + registeredNode.eventName);
+							//logger.Log ("Not listening: " + registeredNode.name + ": " + registeredNode.eventName);
 						}
 					} else {
 						//logger.Log ("Not same scope: " + registeredNode.name + "; it has scope node '" + registeredNode.ScopeNode() + "'");
@@ -470,12 +478,12 @@ namespace GrimmLib
 					logger.Log("Cancelled node " + registeredNode.name + " in conversation " + pConversation);
 					registeredNode.isListening = false;
 					if (registeredNode is ListeningDialogueNode) {
-						logger.Log ("Also end scope for listening node " + registeredNode.name);
+						//logger.Log ("Also end scope for listening node " + registeredNode.name);
 						var listeningNode = (registeredNode as ListeningDialogueNode);
 						ScopeEnded (pConversation, listeningNode.name);
 					}
 					else if (registeredNode is WaitDialogueNode) {
-						logger.Log ("Also end scope for wait node " + registeredNode.name);
+						//logger.Log ("Also end scope for wait node " + registeredNode.name);
 						var waitingNode = (registeredNode as WaitDialogueNode);
 						ScopeEnded (pConversation, waitingNode.name);
 					}

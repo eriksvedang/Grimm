@@ -53,6 +53,11 @@ namespace GrimmLib
 				StartNextNode();
 			}			
 		}
+
+		public override string ToString ()
+		{
+			return string.Format ("[ListeningDialogueNode: eventName={0}, hasBranch={1}, branchNode={2}, isListening={3}, handle={4}]", eventName, hasBranch, branchNode, isListening, handle);
+		}
 		
 		#region ACCESSORS
 		

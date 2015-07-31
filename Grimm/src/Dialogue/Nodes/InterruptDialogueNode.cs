@@ -22,7 +22,7 @@ namespace GrimmLib
 		public override void Update(float dt)
 		{
 			if(!_dialogueRunner.ConversationIsRunning(interruptingConversation)) {
-				//D.Log("Detected that interrupting conversation " + interruptingConversation + " has stopped, will continue in " + base.conversation);
+				D.Log("Detected that interrupting conversation " + interruptingConversation + " has stopped, will continue in " + base.conversation);
 				Stop();
 				StartNextNode();
 			}

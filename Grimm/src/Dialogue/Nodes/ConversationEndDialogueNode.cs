@@ -1,4 +1,5 @@
 using System;
+using GameTypes;
 
 namespace GrimmLib
 {
@@ -7,7 +8,7 @@ namespace GrimmLib
 		public override void OnEnter()
 		{
 			Stop();
-			_dialogueRunner.ConversationEnded(conversation);
+			_dialogueRunner.StopConversation(conversation);
 		}
 	}
 }
