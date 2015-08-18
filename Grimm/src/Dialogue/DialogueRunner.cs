@@ -38,6 +38,8 @@ namespace GrimmLib
 		private event OnEvent _onEvent;
 
 		public Action<string> onGrimmError;
+
+		private List<DialogueNode> _nodesThatAreOn = new List<DialogueNode>();
 		
         public DialogueRunner(RelayTwo pRelay, Language pLanguage)
         {
@@ -51,14 +53,6 @@ namespace GrimmLib
 				if(n is IRegisteredDialogueNode) {
 					IRegisteredDialogueNode ir = n as IRegisteredDialogueNode;
 					_registeredDialogueNodes.Add(ir);
-					/*
-					if(ir.isListening) {
-						
-					}
-					else {
-						Console.WriteLine("Not adding node " + ir.name + " in conversation " + ir.conversation);
-					}
-					*/
 				}
 			}
 			RegisterBuiltInAPIExpressions();
@@ -91,7 +85,7 @@ namespace GrimmLib
 					}
 					catch(Exception e) {
 						string description = d.name + ": " + e.ToString ();
-						D.Log ("GRIMM_ERROR: " + description);
+						D.Log ("GRIMM ERROR: " + description);
 						if (onGrimmError != null) {
 							onGrimmError (description);
 						}

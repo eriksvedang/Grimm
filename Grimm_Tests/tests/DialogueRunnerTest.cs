@@ -105,10 +105,17 @@ namespace GrimmLib.tests
 			
 			runner.Create<TimedDialogueNode>("Conversation2", Language.SWEDISH, "DialogueNode2");
 			n1.Start();
-			
-			Assert.Throws<GrimmException>(() => {
-				runner.Update(1.0f);
-			});
+
+			string msg = null;
+
+			D.onDLog += (pMessage) => { 
+				Console.WriteLine("DLog: " + pMessage);
+				msg = pMessage;
+			};
+		
+			runner.Update(1.0f);
+			runner.Update(1.0f);
+			Assert.NotNull(msg);
 		}
 		
 		[Test()]
