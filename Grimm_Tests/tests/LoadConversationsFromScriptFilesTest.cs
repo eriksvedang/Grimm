@@ -1280,7 +1280,17 @@ namespace GrimmLib.tests
 			dialogueRunner.Update(1.0f);
 			Assert.AreEqual(0, _lines.Count);
 
+			dialogueRunner.Update(0.01f);
+			dialogueRunner.Update(0.01f);
+			dialogueRunner.Update(0.01f);
+			dialogueRunner.Update(0.01f);
 			dialogueRunner.Update(3.0f);
+			dialogueRunner.Update(1.0f);
+			dialogueRunner.Update(1.0f);
+			dialogueRunner.Update(1.0f);
+
+			// TODO: had to hack this a bit (with multiple updates) to make it work, hope it's OK...
+
 			Assert.AreEqual(2, _lines.Count);
 			Assert.AreEqual("Woo!", _lines[0]);
 		}

@@ -40,6 +40,18 @@ namespace GrimmLib
 		public Action<string> onGrimmError;
 
 		private List<DialogueNode> _nodesThatAreOn = new List<DialogueNode>();
+		private List<DialogueNode> _nodesToTurnOn = new List<DialogueNode>();
+		private List<DialogueNode> _nodesToTurnOff = new List<DialogueNode>();
+
+		public void AddToTurnOnNodeList (DialogueNode pNodeToTurnOn)
+		{
+			_nodesToTurnOn.Add(pNodeToTurnOn);
+		}
+
+		public void AddToTurnOffNodeList (DialogueNode pNodeToTurnOff)
+		{
+			_nodesToTurnOff.Add(pNodeToTurnOff);
+		}
 		
         public DialogueRunner(RelayTwo pRelay, Language pLanguage)
         {
@@ -53,6 +65,9 @@ namespace GrimmLib
 				if(n is IRegisteredDialogueNode) {
 					IRegisteredDialogueNode ir = n as IRegisteredDialogueNode;
 					_registeredDialogueNodes.Add(ir);
+				}
+				if(n.isOn) {
+					_nodesThatAreOn.Add(n);
 				}
 			}
 			RegisterBuiltInAPIExpressions();
@@ -75,23 +90,47 @@ namespace GrimmLib
 			return newDialogueNode;
 		}
 
+		public void LogNodesThatAreOn() {
+			Console.WriteLine("Nodes that are on");
+			foreach (DialogueNode d in _nodesThatAreOn) {
+				Console.WriteLine("- " + d.name);
+			}
+			Console.WriteLine("-----------------");
+		}
+
         public void Update(float dt)
         {
-			foreach (DialogueNode d in _dialogueNodes)
-			{
-				if(d.isOn) {
-					try {
+			foreach (DialogueNode d in _nodesThatAreOn) {
+				try {
+					if(d.isOn) {
 						d.Update(dt);
 					}
-					catch(Exception e) {
-						string description = d.name + ": " + e.ToString ();
-						D.Log ("GRIMM ERROR: " + description);
-						if (onGrimmError != null) {
-							onGrimmError (description);
-						}
+				}
+				catch(Exception e) {
+					string description = d.name + ": " + e.ToString ();
+					D.Log ("GRIMM ERROR: " + description);
+					if (onGrimmError != null) {
+						onGrimmError (description);
 					}
 				}
 			}
+
+			foreach(var nodeToTurnOn in _nodesToTurnOn) {
+				if(_nodesThatAreOn.Find(n => n == nodeToTurnOn) != null) {
+					// already there
+					continue;
+				} else {
+					_nodesThatAreOn.Add(nodeToTurnOn);
+				}
+			}
+			_nodesToTurnOn.Clear();
+			
+			foreach(var nodeToTurnOff in _nodesToTurnOff) {
+				if(_nodesThatAreOn.Find(n => n == nodeToTurnOff) != null) {
+					_nodesThatAreOn.Remove(nodeToTurnOff);
+				}
+			}
+			_nodesToTurnOff.Clear();
         }
 		
 		public DialogueNode GetDialogueNode(string pConversation, string pName) 

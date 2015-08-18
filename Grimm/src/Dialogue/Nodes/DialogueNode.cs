@@ -42,12 +42,14 @@ namespace GrimmLib
 		}
 		
 		public void Start() {
+			//Console.WriteLine("Starting node " + name);
 			Invariant();
             isOn = true;
 			OnEnter();
 		}
 		
         public void Stop() { 
+			//Console.WriteLine("Stopping node " + name);
 			Invariant();
             isOn = false;
 			OnExit();
@@ -88,6 +90,12 @@ namespace GrimmLib
             { 
 				_isOnCache = value;
                	CELL_isOn.data = value;
+				if(value) {
+					_dialogueRunner.AddToTurnOnNodeList(this);
+				}
+				else {
+					_dialogueRunner.AddToTurnOffNodeList(this);
+				}
             }
 		}
 		

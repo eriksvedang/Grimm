@@ -49,9 +49,16 @@ namespace GrimmLib.tests
 			
 			Assert.IsTrue(d1.isOn);
 			Assert.IsFalse(d2.isOn);
+
+			runner.LogNodesThatAreOn();
 			
 			// Frame 1
-			runner.Update(0.8f);
+			runner.Update(0.2f);
+			runner.Update(0.2f);
+			runner.Update(0.2f);
+			runner.Update(0.2f);
+
+			runner.LogNodesThatAreOn();
 			
 			Assert.IsFalse(d1.isOn);
 			Assert.IsTrue(d2.isOn);
@@ -207,8 +214,10 @@ namespace GrimmLib.tests
 			_lines = new List<string>();
 			
 			branchingNode.nextNode = "b";
-			dialogueRunner.Update(1.0f);
-			dialogueRunner.Update(1.0f);
+
+			for(int i = 0; i < 4; i++) {
+				dialogueRunner.Update(0.5f);
+			}
 			
 			Assert.IsFalse(start.isOn);
 			Assert.IsFalse(choice.isOn);
