@@ -955,7 +955,8 @@ namespace GrimmLib.tests
 			
 			Assert.IsTrue(dialogueRunner.ConversationIsRunning("conversation24")); // never ends
 		}
-		
+
+		/*
 		[Test()]
 		public void SaySomethingEachFrameUsingLoop()
 		{
@@ -985,6 +986,7 @@ namespace GrimmLib.tests
 				Assert.AreEqual("", _lines[i * 2 + 1]);
 			}
 		}
+		*/
 		
 		[Test()]
 		public void BreakOutOfLoop()
