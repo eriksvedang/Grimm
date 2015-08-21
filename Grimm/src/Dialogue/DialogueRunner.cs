@@ -186,13 +186,14 @@ namespace GrimmLib
 				return _dialogueNodes.FindAll (n => n.conversation == pConversation);
 			}
 
-#if DEBUG
-			if(!_nodesForConversation.ContainsKey(pConversation)) {
-				D.Log("Can't find conversation " + pConversation + " in " + _nodesForConversation);
-			}
-#endif
+			List<DialogueNode> maybeNodes = null;
 
-			return _nodesForConversation [pConversation];
+			if(!_nodesForConversation.TryGetValue(pConversation, out maybeNodes)) {
+				D.Log("Can't find conversation " + pConversation + " in _nodesForConversation dictionary");
+				maybeNodes = new List<DialogueNode>();
+			}
+
+			return maybeNodes;
 		}
 
 		/// <returns>
