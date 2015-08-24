@@ -23,7 +23,7 @@ namespace GrimmLib
 		
 		public override void Update(float dt)
 		{
-			Console.WriteLine("Updating timed wait node, timer = " + timer);
+			//Console.WriteLine("Updating timed wait node, timer = " + timer);
 
 			if(timer > 0) {
 				timer -= dt;
