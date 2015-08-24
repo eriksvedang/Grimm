@@ -22,7 +22,7 @@ namespace GrimmLib
 			}
 		}
 		
-		public override void OnEnter()
+		public override void Update(float dt)
 		{
 			Stop();
 			_dialogueRunner.EventHappened(eventName);

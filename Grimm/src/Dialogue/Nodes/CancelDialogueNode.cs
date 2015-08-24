@@ -12,7 +12,7 @@ namespace GrimmLib
 			CELL_handle = EnsureCell("handle", "");
 		}
 		
-		public override void OnEnter()
+		public override void Update(float dt)
 		{
 			Stop();
 			_dialogueRunner.CancelRegisteredNode(conversation, handle);

@@ -13,7 +13,7 @@ namespace GrimmLib
 			CELL_breakTargetLoop = EnsureCell("breakTarget", "undefined");
 		}
 		
-		public override void OnEnter()
+		public override void Update(float dt)
 		{
 			Stop();
 			LoopDialogueNode targetLoopDialogueNode = _dialogueRunner.GetDialogueNode(conversation, breakTargetLoop) as LoopDialogueNode;

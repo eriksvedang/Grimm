@@ -116,6 +116,7 @@ namespace GrimmLib
         {
 			foreach (DialogueNode d in _nodesThatAreOn) {
 				try {
+					Console.WriteLine("Will update node " + d.name);
 					if(d.isOn) {
 						d.Update(dt);
 					}
@@ -130,8 +131,10 @@ namespace GrimmLib
 			}
 
 			foreach(var nodeToTurnOn in _nodesToTurnOn) {
+				Console.WriteLine("Will turn on " + nodeToTurnOn.name);
 				if(_nodesThatAreOn.Find(n => n == nodeToTurnOn) != null) {
 					// already there
+					Console.WriteLine("already there!");
 					continue;
 				} else {
 					_nodesThatAreOn.Add(nodeToTurnOn);
@@ -140,7 +143,9 @@ namespace GrimmLib
 			_nodesToTurnOn.Clear();
 			
 			foreach(var nodeToTurnOff in _nodesToTurnOff) {
+				Console.WriteLine("Will turn off " + nodeToTurnOff.name);
 				if(_nodesThatAreOn.Find(n => n == nodeToTurnOff) != null) {
+					Console.WriteLine("couldn't find it!");
 					_nodesThatAreOn.Remove(nodeToTurnOff);
 				}
 			}

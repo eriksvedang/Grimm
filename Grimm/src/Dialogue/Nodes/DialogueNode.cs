@@ -1,3 +1,5 @@
+#define LOG
+
 using System;
 using System.Collections.Generic;
 using GameTypes;
@@ -42,14 +44,18 @@ namespace GrimmLib
 		}
 		
 		public void Start() {
-			//Console.WriteLine("Starting node " + name);
+#if LOG
+			Console.WriteLine("Starting node " + name);
+#endif
 			Invariant();
             isOn = true;
 			OnEnter();
 		}
 		
         public void Stop() { 
-			//Console.WriteLine("Stopping node " + name);
+#if LOG
+			Console.WriteLine("Stopping node " + name);
+#endif
 			Invariant();
             isOn = false;
 			OnExit();

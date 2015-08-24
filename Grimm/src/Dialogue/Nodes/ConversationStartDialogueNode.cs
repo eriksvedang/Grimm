@@ -4,7 +4,7 @@ namespace GrimmLib
 {
 	public class ConversationStartDialogueNode : DialogueNode
 	{
-		public override void OnEnter()
+		public override void Update(float dt)
 		{
 			Stop();
 			StartNextNode();

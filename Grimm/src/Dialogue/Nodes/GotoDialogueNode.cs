@@ -12,7 +12,7 @@ namespace GrimmLib
 			CELL_linkedNode = EnsureCell("linkedNode", "");
 		}
 		
-		public override void OnEnter()
+		public override void Update (float dt)
 		{
 			string originalNextNode = nextNode;
 			nextNode = linkedNode;
