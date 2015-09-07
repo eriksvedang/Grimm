@@ -37,6 +37,11 @@ namespace GrimmLib
 			
 			StartNextNode();
 		}
+
+		public override string ToString ()
+		{
+			return string.Format ("[CallFunctionDialogueNode: function={0}, args={1}, conversation={2}]", function, args, conversation);
+		}
 		
 		#region ACCESSORS
 		

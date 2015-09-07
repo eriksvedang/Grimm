@@ -41,7 +41,7 @@ namespace GrimmLib
 		
 		public void EventHappened()
 		{
-			_dialogueRunner.logger.Log("The event of ListeningDialogueNode '" + name + "' in conversation '" + conversation + "' happened");
+			//_dialogueRunner.logger.Log("The event of ListeningDialogueNode '" + name + "' in conversation '" + conversation + "' happened");
 			
 			isListening = false;
 			if(hasBranch) {

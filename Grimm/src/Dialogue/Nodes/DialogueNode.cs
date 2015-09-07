@@ -45,7 +45,7 @@ namespace GrimmLib
 		
 		public void Start() {
 #if LOG
-			Console.WriteLine("Starting node " + name);
+			D.Log("Starting node " + ToString());
 #endif
 			Invariant();
             isOn = true;
@@ -54,7 +54,7 @@ namespace GrimmLib
 		
         public void Stop() { 
 #if LOG
-			Console.WriteLine("Stopping node " + name);
+			D.Log("Stopping node " + ToString());
 #endif
 			Invariant();
             isOn = false;
@@ -74,7 +74,12 @@ namespace GrimmLib
 		public virtual void OnEnter() {}
 		public virtual void OnExit() {}
 		public virtual void Update(float dt) {}
-		
+
+		public override string ToString ()
+		{
+			return string.Format ("[DialogueNode: name={0}, isOn={1}, nextNode={2}, conversation={3}, scopeNode={4}]", name, isOn, nextNode, conversation, scopeNode);
+		}
+
 		#region ACCESSORS
 		
 		public string name {

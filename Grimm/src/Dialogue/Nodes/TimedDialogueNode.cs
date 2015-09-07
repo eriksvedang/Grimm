@@ -49,6 +49,11 @@ namespace GrimmLib
 				}
 			}
 		}
+
+		public override string ToString ()
+		{
+			return string.Format ("[TimedDialogueNode: timer={0}, timerStartValue={1}, speaker={2}, line={3}, conversionat = {4}]", timer, timerStartValue, speaker, line,conversation);
+		}
 		
 		#region ACCESSORS
 		
