@@ -53,7 +53,12 @@ namespace GrimmLib
 				Stop();
 			}
 		}
-		
+
+		public override string ToString ()
+		{
+			return string.Format ("[WaitDialogueNode: hasBranch={0}, branchNode={1}, handle={2}, isListening={3}, eventName={4}, conversation={5}]", hasBranch, branchNode, handle, isListening, eventName, conversation);
+		}
+
 		private void Evaluate()
 		{
 			foreach(ExpressionDialogueNode expressionNode in expressions) {
@@ -73,7 +78,7 @@ namespace GrimmLib
 
 		public void EventHappened()
 		{
-			_dialogueRunner.logger.Log("The event of WaitDialogueNode '" + name + "' in conversation '" + conversation + "' happened");
+			//_dialogueRunner.logger.Log("The event of WaitDialogueNode '" + name + "' in conversation '" + conversation + "' happened");
 			Evaluate();
 		}
 		

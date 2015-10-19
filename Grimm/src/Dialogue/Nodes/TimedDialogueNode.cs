@@ -5,6 +5,8 @@ namespace GrimmLib
 {
 	public class TimedDialogueNode : DialogueNode
 	{
+		public static float speedScaling = 1.0f;
+
 		ValueEntry<float> CELL_timer;
 		ValueEntry<float> CELL_timerStartValue;
 		ValueEntry<string> CELL_speaker;
@@ -40,12 +42,17 @@ namespace GrimmLib
 		public override void Update(float dt)
 		{
 			if(timer > 0) {
-				timer -= dt;
+				timer -= dt * speedScaling;
 				if(timer <= 0.0f) {
 					Stop();
 					StartNextNode();
 				}
 			}
+		}
+
+		public override string ToString ()
+		{
+			return string.Format ("[TimedDialogueNode: timer={0}, timerStartValue={1}, speaker={2}, line={3}, conversionat = {4}]", timer, timerStartValue, speaker, line,conversation);
 		}
 		
 		#region ACCESSORS

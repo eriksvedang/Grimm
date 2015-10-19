@@ -24,8 +24,10 @@ namespace GrimmLib
 				_dialogueRunner.CallFunction(function, args);
 			}
 			catch(Exception e) {
+				Console.ForegroundColor = ConsoleColor.Red;
 				string msg = "Error when calling function from node " + this.name + " in conversation '" + this.conversation + "': " + e.Message + " \nStack trace: " + e.StackTrace;
 				D.Log(msg);
+				Console.ForegroundColor = ConsoleColor.White;
 
 				if (_dialogueRunner.onGrimmError != null) {
 					_dialogueRunner.onGrimmError (msg);
@@ -34,6 +36,11 @@ namespace GrimmLib
 			}
 			
 			StartNextNode();
+		}
+
+		public override string ToString ()
+		{
+			return string.Format ("[CallFunctionDialogueNode: function={0}, args={1}, conversation={2}]", function, args, conversation);
 		}
 		
 		#region ACCESSORS

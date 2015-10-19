@@ -49,9 +49,16 @@ namespace GrimmLib.tests
 			
 			Assert.IsTrue(d1.isOn);
 			Assert.IsFalse(d2.isOn);
+
+			runner.LogNodesThatAreOn();
 			
 			// Frame 1
-			runner.Update(0.8f);
+			runner.Update(0.2f);
+			runner.Update(0.2f);
+			runner.Update(0.2f);
+			runner.Update(0.2f);
+
+			runner.LogNodesThatAreOn();
 			
 			Assert.IsFalse(d1.isOn);
 			Assert.IsTrue(d2.isOn);
@@ -185,7 +192,8 @@ namespace GrimmLib.tests
 			a.timer = b.timer = c.timer = 1;
 			
 			start.Start();
-			
+			start.Update(0.1f);
+
 			BranchingDialogueNode branchingNode = dialogueRunner.GetActiveBranchingDialogueNode("Snack");
 			
 			List<string> options = new List<string>();
@@ -207,8 +215,10 @@ namespace GrimmLib.tests
 			_lines = new List<string>();
 			
 			branchingNode.nextNode = "b";
-			dialogueRunner.Update(1.0f);
-			dialogueRunner.Update(1.0f);
+
+			for(int i = 0; i < 10; i++) {
+				dialogueRunner.Update(0.2f);
+			}
 			
 			Assert.IsFalse(start.isOn);
 			Assert.IsFalse(choice.isOn);
@@ -254,6 +264,8 @@ namespace GrimmLib.tests
 
 			runner.StartConversation ("Conversation1");
 			runner.Update (0.1f);
+			runner.Update (0.1f);
+			runner.Update (0.1f);
 			Assert.IsTrue (waitNode.isOn);
 			Assert.IsTrue (runner.ConversationIsRunning("Conversation1"));
 
@@ -272,6 +284,8 @@ namespace GrimmLib.tests
 
 			// But if the bam! event happens while sunny, the conversation should end
 			runner.EventHappened("bam!");
+			runner.Update (0.1f);
+			runner.Update (0.1f);
 			runner.Update (0.1f);
 			Assert.IsFalse (waitNode.isOn);
 			Assert.IsFalse (runner.ConversationIsRunning("Conversation1"));

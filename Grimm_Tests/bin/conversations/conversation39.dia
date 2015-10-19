@@ -1,0 +1,6 @@
+
+[AGAIN]
+Log("boom")
+WAIT 1
+GOTO AGAIN
+

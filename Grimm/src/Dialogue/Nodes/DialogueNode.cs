@@ -1,3 +1,5 @@
+//#define LOG
+
 using System;
 using System.Collections.Generic;
 using GameTypes;
@@ -42,12 +44,18 @@ namespace GrimmLib
 		}
 		
 		public void Start() {
+#if LOG
+			D.Log("Starting node " + ToString());
+#endif
 			Invariant();
             isOn = true;
 			OnEnter();
 		}
 		
         public void Stop() { 
+#if LOG
+			D.Log("Stopping node " + ToString());
+#endif
 			Invariant();
             isOn = false;
 			OnExit();
@@ -66,7 +74,12 @@ namespace GrimmLib
 		public virtual void OnEnter() {}
 		public virtual void OnExit() {}
 		public virtual void Update(float dt) {}
-		
+
+		public override string ToString ()
+		{
+			return string.Format ("[DialogueNode: name={0}, isOn={1}, nextNode={2}, conversation={3}, scopeNode={4}]", name, isOn, nextNode, conversation, scopeNode);
+		}
+
 		#region ACCESSORS
 		
 		public string name {
@@ -88,6 +101,12 @@ namespace GrimmLib
             { 
 				_isOnCache = value;
                	CELL_isOn.data = value;
+				if(value) {
+					_dialogueRunner.AddToTurnOnNodeList(this);
+				}
+				else {
+					_dialogueRunner.AddToTurnOffNodeList(this);
+				}
             }
 		}
 		

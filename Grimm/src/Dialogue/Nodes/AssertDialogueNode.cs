@@ -4,7 +4,7 @@ namespace GrimmLib
 {
 	public class AssertDialogueNode : ExpressionDialogueNode
 	{	
-		public override void OnEnter()
+		public override void Update(float dt)
 		{
 			Stop();
 			if(_dialogueRunner.EvaluateExpression(expression, args) == false) {

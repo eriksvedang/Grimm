@@ -5,7 +5,7 @@ namespace GrimmLib
 {
 	public class ConversationEndDialogueNode : DialogueNode
 	{
-		public override void OnEnter()
+		public override void Update(float dt)
 		{
 			Stop();
 			_dialogueRunner.StopConversation(conversation);

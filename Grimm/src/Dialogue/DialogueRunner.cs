@@ -27,6 +27,7 @@ namespace GrimmLib
 		private TableTwo _dialogueTable;
 		private Language _language;
 		private List<DialogueNode> _dialogueNodes;
+		private Dictionary<string, List<DialogueNode>> _nodesForConversation = new Dictionary<string, List<DialogueNode>>();
 
 		private event OnSomeoneSaidSomething _onSomeoneSaidSomething;
 
@@ -40,6 +41,18 @@ namespace GrimmLib
 		public Action<string> onGrimmError;
 
 		private List<DialogueNode> _nodesThatAreOn = new List<DialogueNode>();
+		private List<DialogueNode> _nodesToTurnOn = new List<DialogueNode>();
+		private List<DialogueNode> _nodesToTurnOff = new List<DialogueNode>();
+
+		public void AddToTurnOnNodeList (DialogueNode pNodeToTurnOn)
+		{
+			_nodesToTurnOn.Add(pNodeToTurnOn);
+		}
+
+		public void AddToTurnOffNodeList (DialogueNode pNodeToTurnOff)
+		{
+			_nodesToTurnOff.Add(pNodeToTurnOff);
+		}
 		
         public DialogueRunner(RelayTwo pRelay, Language pLanguage)
         {
@@ -54,9 +67,24 @@ namespace GrimmLib
 					IRegisteredDialogueNode ir = n as IRegisteredDialogueNode;
 					_registeredDialogueNodes.Add(ir);
 				}
+				if(n.isOn) {
+					_nodesThatAreOn.Add(n);
+				}
+				AddNodeToNodeForConversationDictionary(n.conversation, n);
 			}
 			RegisterBuiltInAPIExpressions();
         }
+
+		void AddNodeToNodeForConversationDictionary (string pConversation, DialogueNode n)
+		{
+			List<DialogueNode> maybeList = null;
+			if(!_nodesForConversation.TryGetValue(pConversation, out maybeList)) {
+				maybeList = new List<DialogueNode>();
+				_nodesForConversation.Add(pConversation, maybeList);
+			}
+			//D.Log("Adding " + n.name + " to NodeForConversationDictionary, with conversation " + pConversation);
+			maybeList.Add(n);
+		}
 		
 		public T Create<T>(string pConversation, Language pLanguage, string pName) where T : DialogueNode
 		{
@@ -68,6 +96,7 @@ namespace GrimmLib
 			newDialogueNode.name = pName;
 			newDialogueNode.SetRunner(this);
 			_dialogueNodes.Add(newDialogueNode);
+			AddNodeToNodeForConversationDictionary(pConversation, newDialogueNode);
 			if(newDialogueNode is IRegisteredDialogueNode) {
 				IRegisteredDialogueNode ir = newDialogueNode as IRegisteredDialogueNode;
 				_registeredDialogueNodes.Add(ir);
@@ -75,38 +104,71 @@ namespace GrimmLib
 			return newDialogueNode;
 		}
 
+		public void LogNodesThatAreOn() {
+			Console.WriteLine("Nodes that are on");
+			foreach (DialogueNode d in _nodesThatAreOn) {
+				Console.WriteLine("- " + d.name);
+			}
+			Console.WriteLine("-----------------");
+		}
+
         public void Update(float dt)
         {
-			foreach (DialogueNode d in _dialogueNodes)
-			{
-				if(d.isOn) {
-					try {
+			foreach (DialogueNode d in _nodesThatAreOn) {
+				try {
+					//Console.WriteLine("Will update node " + d.name);
+					if(d.isOn) {
 						d.Update(dt);
 					}
-					catch(Exception e) {
-						string description = d.name + ": " + e.ToString ();
-						D.Log ("GRIMM ERROR: " + description);
-						if (onGrimmError != null) {
-							onGrimmError (description);
-						}
+				}
+				catch(Exception e) {
+					string description = d.name + ": " + e.ToString ();
+					D.Log ("GRIMM ERROR: " + description);
+					if (onGrimmError != null) {
+						onGrimmError (description);
 					}
 				}
 			}
+
+			foreach(var nodeToTurnOn in _nodesToTurnOn) {
+				//Console.WriteLine("Will turn on " + nodeToTurnOn.name);
+				if(_nodesThatAreOn.Find(n => n == nodeToTurnOn) != null) {
+					// already there
+					// Console.WriteLine("already there!");
+					continue;
+				} else {
+					_nodesThatAreOn.Add(nodeToTurnOn);
+				}
+			}
+			_nodesToTurnOn.Clear();
+			
+			foreach(var nodeToTurnOff in _nodesToTurnOff) {
+				// Console.WriteLine("Will turn off " + nodeToTurnOff.name);
+				if(_nodesThatAreOn.Find(n => n == nodeToTurnOff) != null) {
+					// Console.WriteLine("couldn't find it!");
+					_nodesThatAreOn.Remove(nodeToTurnOff);
+				}
+			}
+			_nodesToTurnOff.Clear();
         }
-		
+				
 		public DialogueNode GetDialogueNode(string pConversation, string pName) 
 		{
-			DialogueNode n = _dialogueNodes.Find(o => (o.language == _language && o.conversation == pConversation && o.name == pName));
+			List<DialogueNode> nodesInConvo = GetNodesForConversation (pConversation);
+
+			DialogueNode n = nodesInConvo.Find(o => (o.name == pName));
+
+			/*o.language == _language && */
 			
 			if(n != null) {
 				return n;
 			} else {
-				DialogueNode ignoreLanguage = _dialogueNodes.Find(o => (o.conversation == pConversation && o.name == pName));
-				if(ignoreLanguage != null) {
-					throw new GrimmException("Can't find DialogueNode with name '" + pName + "' in conversation '" + pConversation + "'" + " when using language " + _language);
-				} else {
-					throw new GrimmException("Can't find DialogueNode with name '" + pName + "' in conversation '" + pConversation + "'");
-				}
+//				DialogueNode ignoreLanguage = _dialogueNodes.Find(o => (o.conversation == pConversation && o.name == pName));
+//				if(ignoreLanguage != null) {
+//					throw new GrimmException("Can't find DialogueNode with name '" + pName + "' in conversation '" + pConversation + "'" + " when using language " + _language);
+//				} else {
+//				}
+				throw new GrimmException("Can't find DialogueNode with name '" + pName + "' in conversation '" + pConversation + "'");
 			}
 		}
 
@@ -119,15 +181,36 @@ namespace GrimmLib
 			return _registeredDialogueNodes;
 		}
 
+		List<DialogueNode> GetNodesForConversation (string pConversation)
+		{
+			if(string.IsNullOrEmpty(pConversation)) {
+				return new List<DialogueNode>();
+			}
+
+			if(pConversation == runStringAsFunctionCMD) {
+				return _dialogueNodes.FindAll (n => n.conversation == pConversation);
+			}
+
+			List<DialogueNode> maybeNodes = null;
+
+			if(!_nodesForConversation.TryGetValue(pConversation, out maybeNodes)) {
+				D.Log("Can't find conversation " + pConversation + " in _nodesForConversation dictionary");
+				maybeNodes = new List<DialogueNode>();
+			}
+
+			return maybeNodes;
+		}
+
 		/// <returns>
 		/// Returns null if there is no active branching dialogue node in the conversation
 		/// </returns>
 		public BranchingDialogueNode GetActiveBranchingDialogueNode(string pConversation)
 		{
-			BranchingDialogueNode n = _dialogueNodes.Find(o => 
+			List<DialogueNode> nodesInConvo = GetNodesForConversation (pConversation);
+
+			BranchingDialogueNode n = nodesInConvo.Find(o => 
 			                                     (o.isOn) &&
 			                                     (o.language == _language) && 
-			                                     (o.conversation == pConversation) &&
 			                                     (o is BranchingDialogueNode)
 			                                     ) as BranchingDialogueNode;
 			return n;
@@ -135,10 +218,11 @@ namespace GrimmLib
 		
 		private TimedDialogueNode GetActiveTimedDialogueNode(string pConversation)
 		{
-			TimedDialogueNode n = _dialogueNodes.Find(o => 
+			List<DialogueNode> nodesInConvo = GetNodesForConversation (pConversation);
+
+			TimedDialogueNode n = nodesInConvo.Find(o => 
 			                                     (o.isOn) &&
 			                                     (o.language == _language) && 
-			                                     (o.conversation == pConversation) &&
 			                                     (o is TimedDialogueNode)
 			                                     ) as TimedDialogueNode;
 			return n;
@@ -154,13 +238,16 @@ namespace GrimmLib
 				//D.Log("Will not fast forward in " + pConversation + " since it just switched to a new node");
 			} else {
 				activeTimedNode.timer = 0.01f;
-				//D.Log("Fast forwarded timed dialogue node " + activeTimedNode.name);
+				//D.Log("Fast forwarded timed dialogue node " + activeTimedNode);
 			}
 		}
 
 		private void CheckThatThereIsOnlyOneActiveNodeInTheConversation(string pConversation)
 		{
-			DialogueNode[] nodes = _dialogueNodes.FindAll(o => (o.language == _language && o.conversation == pConversation && o.isOn)).ToArray();
+			List<DialogueNode> nodesInConvo = GetNodesForConversation (pConversation);
+
+			DialogueNode[] nodes = nodesInConvo.FindAll(o => (o.language == _language && o.isOn)).ToArray();
+
 			if(nodes.Length > 1) {
 				StringBuilder sb = new StringBuilder();
 				foreach(var node in nodes) {
@@ -172,7 +259,9 @@ namespace GrimmLib
 		
 		public bool ConversationIsRunning(string pConversation)
 		{
-			return (_dialogueNodes.Find(o => (o.language == _language && o.conversation == pConversation && o.isOn)) != null);
+			List<DialogueNode> nodesInConvo = GetNodesForConversation (pConversation);
+
+			return (nodesInConvo.Find(o => (o.language == _language && o.isOn)) != null);
 		}
 		
 		/// <summary>
@@ -185,8 +274,10 @@ namespace GrimmLib
 				return;
 			}
 
+			List<DialogueNode> nodesInConvo = GetNodesForConversation (pConversation);
+
 			DialogueNode conversationStartNode = 
-				_dialogueNodes.Find(o => (o.language == _language && o.conversation == pConversation && o is ConversationStartDialogueNode));
+				nodesInConvo.Find(o => (o.language == _language && o is ConversationStartDialogueNode));
 			
 			if(conversationStartNode != null) {
 				logger.Log("Starting conversation '" + pConversation + "'");
@@ -252,32 +343,39 @@ namespace GrimmLib
 		{
 			logger.Log("Stopping conversation '" + pConversation + "'");
 
-			foreach(DialogueNode n in _dialogueNodes) {
-				if(n.isOn && n.conversation == pConversation) {
+			List<DialogueNode> nodesInConvo = GetNodesForConversation (pConversation);
+
+			foreach(DialogueNode n in nodesInConvo) {
+				if(n.isOn) {
 					//D.Log("Stopping node " + n);
 					n.Stop();
 				}
 				var r = n as IRegisteredDialogueNode;
-				if(r != null && n.conversation == pConversation) {
+				if(r != null) {
 					//D.Log("Stopping listening node " + n);
 					r.isListening = false;
 					n.Stop(); // <-- THIS IS NEW, MAKE SURE IT DOESN'T CAUSE TROUBLE! Trying to get conversations to stop ALL nodes.
 				}
 			}
 		}
-		
+
 		public void RemoveConversation(string pConversation)
 		{
-			foreach (DialogueNode d in _dialogueNodes.ToArray())
+			var nodes = GetNodesForConversation(pConversation);
+
+			foreach (DialogueNode d in nodes)
             {
-				if(d.conversation == pConversation) {
-					_dialogueNodes.Remove(d);
-					if(d is IRegisteredDialogueNode) {
-						IRegisteredDialogueNode ir = d as IRegisteredDialogueNode;
-						_registeredDialogueNodes.Remove(ir);
-					}
-					_dialogueTable.RemoveRowAt(d.objectId);
+				_nodesToTurnOff.Add(d);
+				_dialogueNodes.Remove(d);
+				if(d is IRegisteredDialogueNode) {
+					IRegisteredDialogueNode ir = d as IRegisteredDialogueNode;
+					_registeredDialogueNodes.Remove(ir);
 				}
+				_dialogueTable.RemoveRowAt(d.objectId);
+			}
+
+			if(_nodesForConversation.ContainsKey(pConversation)) {
+				_nodesForConversation.Remove(pConversation);
 			}
 		}
 		
@@ -396,15 +494,15 @@ namespace GrimmLib
 			}
 			return string.Join(", ", keys);
 		}
-		
+
+		const string runStringAsFunctionCMD = "CMD";
+
 		public void RunStringAsFunction(string pCommand)
 		{
-			const string conversation = "RunStringAsFunction";
-			
-			RemoveConversation(conversation);
+			RemoveConversation(runStringAsFunctionCMD);
 			DialogueScriptLoader d = new DialogueScriptLoader(this);
-			d.CreateDialogueNodesFromString(pCommand, conversation);
-			StartConversation(conversation);
+			d.CreateDialogueNodesFromString(pCommand, runStringAsFunctionCMD);
+			StartConversation(runStringAsFunctionCMD);
 		}
 
 		public void AddOnEventListener(OnEvent pOnEvent)
@@ -431,17 +529,6 @@ namespace GrimmLib
 				_onEvent(pEventName);
 			}
 		}
-		
-//		public void ConversationEnded(string pConversation)
-//		{
-//			//logger.Log("Conversation '" + pConversation + "' ended");
-//			foreach(IRegisteredDialogueNode l in _registeredDialogueNodes)
-//			{
-//				if(l.conversation == pConversation) {
-//					l.isListening = false;
-//				}
-//			}
-//		}
 		
 		public void ScopeEnded(string pConversation, string pScopeNode)
 		{

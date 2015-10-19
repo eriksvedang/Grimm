@@ -1,5 +1,6 @@
 using System;
 using RelayLib;
+using GameTypes;
 
 namespace GrimmLib
 {
@@ -22,6 +23,8 @@ namespace GrimmLib
 		
 		public override void Update(float dt)
 		{
+			//Console.WriteLine("Updating timed wait node, timer = " + timer);
+
 			if(timer > 0) {
 				timer -= dt;
 				if(timer <= 0.0f) {
