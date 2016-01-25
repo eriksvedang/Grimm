@@ -112,6 +112,19 @@ namespace GrimmLib
 			Console.WriteLine("-----------------");
 		}
 
+		public List<DialogueNode> GetActiveNodes (string pConversation)
+		{
+			var activeNodes = new List<DialogueNode>();
+
+			foreach (DialogueNode d in _nodesThatAreOn) {
+				if(d.conversation == pConversation) {
+					activeNodes.Add(d);
+				}
+			}
+
+			return activeNodes;
+		}
+
         public void Update(float dt)
         {
 			foreach (DialogueNode d in _nodesThatAreOn) {
